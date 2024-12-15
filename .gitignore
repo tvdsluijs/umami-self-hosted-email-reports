@@ -1,0 +1,5 @@
+config.json
+websites_config.json
+# pixi environments
+.pixi
+*.egg-info

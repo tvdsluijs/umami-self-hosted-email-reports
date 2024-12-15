@@ -1,0 +1,17 @@
+// rename to websites_config.json and remove this line
+[
+    {
+        "website_id": "website-id-1",
+        "name": "website 1 name",
+        "frequency": "week",
+        "emails": ["recipient1@example.com", "recipient2@example.com"],
+        "what_stats": ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"]
+    },
+    {
+        "website_id": "website-id-2",
+        "name": "Website 2 name",
+        "frequency": "monthly",
+        "emails": ["recipient3@example.com"],
+        "what_stats": ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"]
+    }
+]

@@ -1,0 +1,22 @@
+// rename to config.json and remove this line
+{
+    "umami": {
+        "api_url": "https://your-umami-url/api/websites",
+        "username": "your-username",
+        "password": "your-password"
+    },
+    "company": {
+        "name": "Umbrella Corporation",
+        "url": "https://example.com",
+        "email": "info@example.com",
+        "logo": "https://ih1.redbubble.net/image.1274632654.7130/flat,750x,075,f-pad,750x1000,f8f8f8.jpg"
+    },
+    "smtp": {
+        "host": "smtp.example.com",
+        "port": 587,
+        "username": "your-email@example.com",
+        "password": "your-email-password",
+        "from_email": "your-email@example.com",
+        "from_name": "Website Report"
+    }
+}

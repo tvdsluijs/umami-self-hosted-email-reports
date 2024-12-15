@@ -1,0 +1,106 @@
+referrers
+[
+  {
+    "x": "linkedin.com",
+    "y": 4
+  },
+  {
+    "x": "",
+    "y": 2
+  },
+  {
+    "x": "com.linkedin.android",
+    "y": 2
+  }
+]
+
+Devices
+[
+  {
+    "x": "mobile",
+    "y": 8
+  }
+]
+
+
+OSes
+[
+  {
+    "x": "iOS",
+    "y": 6
+  },
+  {
+    "x": "Android OS",
+    "y": 2
+  }
+]
+
+Browsers
+[
+  {
+    "x": "ios-webview",
+    "y": 4
+  },
+  {
+    "x": "chrome",
+    "y": 2
+  },
+  {
+    "x": "crios",
+    "y": 1
+  },
+  {
+    "x": "ios",
+    "y": 1
+  }
+]
+
+
+Countries
+[
+  {
+    "x": "NL",
+    "y": 8
+  }
+]
+
+Events
+[
+  {
+    "x": "Click",
+    "y": 8
+  }
+]
+
+urls
+[
+  {
+    "x": "/",
+    "y": 8
+  }
+]
+
+STATS
+
+{
+  "pageviews": {
+    "value": 8,
+    "prev": 0
+  },
+  "visitors": {
+    "value": 8,
+    "prev": 0
+  },
+  "visits": {
+    "value": 8,
+    "prev": 0
+  },
+  "bounces": {
+    "value": 8,
+    "prev": 0
+  },
+  "totaltime": {
+    "value": 0,
+    "prev": 0
+  }
+}

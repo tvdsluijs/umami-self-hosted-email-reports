@@ -1,0 +1,13 @@
+[project]
+authors = ["Theo van der Sluijs <theo@vandersluijs.nl>"]
+channels = ["conda-forge"]
+description = "Add a short description here"
+name = "umami_mailer"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+report = "python umami_report.py"
+
+[dependencies]
+requests = "*"
