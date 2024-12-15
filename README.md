@@ -1,4 +1,4 @@
-# 📊 Umami Email Reports
+# 📊 Self Hosted Umami Analytics Email Reports Python script
 
 ## 🌟 Overview
 
