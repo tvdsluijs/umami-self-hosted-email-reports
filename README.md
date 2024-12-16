@@ -123,7 +123,8 @@ Defines the 🌐 websites, their reporting frequency, recipients, and metrics to
         "website_id": "website-id-1",
         "name": "website 1 name",
         "frequency": "week",
-        "send_day": [], // will always be on first of the week or set one day, mon, tue, wed, thu, fri, sat, sun only pick one
+        "send_day": [],
+        "top": 10,
         "emails": ["recipient1@example.com", "recipient2@example.com"],
         "what_stats": ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"]
     },
@@ -131,7 +132,8 @@ Defines the 🌐 websites, their reporting frequency, recipients, and metrics to
         "website_id": "website-id-2",
         "name": "Website 2 name",
         "frequency": "monthly",
-        "send_day": [], // will always be on the first of the month
+        "send_day": [],
+        "top": 5,
         "emails": ["recipient3@example.com"],
         "what_stats": ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"]
     },
@@ -139,7 +141,7 @@ Defines the 🌐 websites, their reporting frequency, recipients, and metrics to
         "website_id": "website-id-3",
         "name": "website 3 name",
         "frequency": "day",
-        "send_day": ["mon", "thu"], // empty = every day or can be multiple mon, tue, wed, thu, fri, sat, sun
+        "send_day": ["mon", "thu"],
         "emails": ["recipient1@example.com", "recipient2@example.com"],
         "what_stats": ["stats", "events", "urls"]
     }

@@ -3,7 +3,7 @@ authors = ["Theo van der Sluijs <theo@vandersluijs.nl>"]
 channels = ["conda-forge"]
 description = "A simple python mailer for Umami reports"
 name = "umami_mailer"
-platforms = ["osx-arm64"]
+platforms = ["osx-arm64", "linux-64", "linux-aarch64"]
 version = "0.1.0"
 
 [tasks]
