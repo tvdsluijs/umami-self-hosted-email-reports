@@ -1,47 +1,99 @@
+"""
+📊 Umami Self-Hosted Email Reports Script
+
+This script generates and sends analytics reports for websites managed by
+Umami Analytics. It supports various frequencies, including daily, weekly,
+monthly, quarterly, and yearly reports.
+
+Features:
+- Fetch analytics data from Umami's API.
+- Generate reports as HTML emails.
+- Schedule and send reports via email to multiple recipients.
+
+Modules Used:
+- `helpers.config`: Load configuration files.
+- `helpers.auth`: Authenticate with the Umami API.
+- `helpers.report`: Generate HTML email reports.
+- `helpers.email`: Send emails via SMTP.
+- `helpers.umami`: Fetch analytics data from the Umami API.
+- `helpers.scheduler`: Schedule and process reports.
+- `helpers.date_ranges`: Calculate date ranges for the reports.
+
+Author: Theo van der Sluijs
+Contact: [📧 Email](mailto:theo@vandersluijs.nl)
+License: MIT
+"""
 import os
+# Import helper functions and modules
 from helpers.config import load_config
 from helpers.auth import authenticate
 from helpers.report import generate_html_email
 from helpers.email import send_email
 from helpers.umami import get_umami_data
 from helpers.scheduler import schedule_reports, should_send_report
-from helpers.files import load_last_sent, save_last_sent
 from helpers.date_ranges import calculate_date_range
 
 # Load configurations
-CONFIG = load_config("config.json")
-WEBSITES = load_config("websites_config.json")
+CONFIG = load_config("config.json")  # General configurations, e.g., SMTP and Umami credentials
+WEBSITES = load_config("websites_config.json")  # Website-specific configurations like frequency and emails
 
-COMPANY = CONFIG["company"]
-UMAMI_API_URL = CONFIG["umami"]["api_url"]
-UMAMI_USERNAME = CONFIG["umami"]["username"]
-UMAMI_PASSWORD = CONFIG["umami"]["password"]
-SMTP_CONFIG = CONFIG["smtp"]
+COMPANY = CONFIG["company"]  # Company details for branding in email
+UMAMI_API_URL = CONFIG["umami"]["api_url"]  # Base URL for Umami API
+UMAMI_USERNAME = CONFIG["umami"]["username"]  # Umami API username
+UMAMI_PASSWORD = CONFIG["umami"]["password"]  # Umami API password
+SMTP_CONFIG = CONFIG["smtp"]  # SMTP configuration for sending emails
 
-BEARER_TOKEN = None
+BEARER_TOKEN = None  # Global variable for storing the Umami API authentication token
 
 def process_website(site, now):
-    frequency = site["frequency"]
-    website_id = site["website_id"]
-    website_name = site["name"]
-    recipients = site["emails"]
-    what_stats = site["what_stats"]
+    """
+    Process a single website to determine if a report should be sent,
+    fetch data, generate the report, and send it via email.
 
-    LOGS_DIR = "logs"
-    os.makedirs(LOGS_DIR, exist_ok=True)
-    last_sent_file = os.path.join(LOGS_DIR, f"last_sent_{website_id}.json")
+    Args:
+        site (dict): The website configuration dictionary.
+        now (datetime): The current date and time.
+    """
+    # Extract website-specific configuration
+    frequency = site.get('frequency', 'daily')  # Frequency of the report (default: daily)
+    send_day = site.get('send_day', [])  # Days to send the report (e.g., ["mon", "fri"])
+    website_id = site["website_id"]  # Unique identifier for the website in Umami
+    website_name = site["name"]  # Display name for the website
+    recipients = site["emails"]  # List of email recipients
+    what_stats = site["what_stats"]  # List of metrics to include in the report
+    top = site.get('top', 5) # show the number of statistics per chapter, default 5
 
-    last_sent = load_last_sent(last_sent_file)
-
-    if should_send_report(last_sent, frequency):
+    # Check if the report should be sent based on frequency and send_day
+    if should_send_report(frequency, send_day):
+        # Calculate the date range for the report based on frequency
         range_start, range_end = calculate_date_range(now, frequency)
+
+        # Fetch analytics data from the Umami API
         stats = get_umami_data(UMAMI_API_URL, BEARER_TOKEN, website_id, range_start, range_end, frequency, what_stats)
-        # report = generate_report(website_name, stats, pages, referrers)
-        report = generate_html_email(COMPANY, frequency, stats, what_stats, website_name)
+
+        # Get the current directory of the script
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        css_file = "style.css"
+        # Combine the current directory with the CSS file name
+        css_file_path = os.path.join(current_dir, css_file)
+
+        # Generate the HTML email report
+        report = generate_html_email(COMPANY, frequency, stats, what_stats, css_file_path, website_name, top)
+
+        # Compose the subject line for the email
         subject = f"{frequency.capitalize()}ly Website Report for {website_name}"
+
+        # Send the report via email
         send_email(subject, report, recipients, SMTP_CONFIG)
-        save_last_sent(last_sent_file, now)
 
 if __name__ == "__main__":
+    """
+    Main script execution:
+    - Authenticate with the Umami API.
+    - Schedule reports for all websites in the configuration.
+    """
+    # Authenticate with the Umami API and retrieve a bearer token
     BEARER_TOKEN = authenticate(UMAMI_API_URL, UMAMI_USERNAME, UMAMI_PASSWORD)
+
+    # Schedule and process reports for all websites
     schedule_reports(WEBSITES, process_website)

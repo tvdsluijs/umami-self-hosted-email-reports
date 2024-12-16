@@ -1,7 +1,7 @@
 [project]
 authors = ["Theo van der Sluijs <theo@vandersluijs.nl>"]
 channels = ["conda-forge"]
-description = "Add a short description here"
+description = "A simple python mailer for Umami reports"
 name = "umami_mailer"
 platforms = ["osx-arm64"]
 version = "0.1.0"

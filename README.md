@@ -6,6 +6,8 @@
 
 This script is highly customizable and lets you style emails with a dedicated 🎨 `style.css` file. It’s perfect for 👨‍💻 developers who want more control over their analytics setup.
 
+![Email Report](email_report.jpg)
+
 ---
 
 ## 🤔 Why I Built This
@@ -119,20 +121,40 @@ Defines the 🌐 websites, their reporting frequency, recipients, and metrics to
 [
     {
         "website_id": "website-id-1",
-        "name": "Website 1",
+        "name": "website 1 name",
         "frequency": "week",
+        "send_day": [], // will always be on first of the week or set one day, mon, tue, wed, thu, fri, sat, sun only pick one
         "emails": ["recipient1@example.com", "recipient2@example.com"],
         "what_stats": ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"]
     },
     {
         "website_id": "website-id-2",
-        "name": "Website 2",
+        "name": "Website 2 name",
         "frequency": "monthly",
+        "send_day": [], // will always be on the first of the month
         "emails": ["recipient3@example.com"],
         "what_stats": ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"]
+    },
+    {
+        "website_id": "website-id-3",
+        "name": "website 3 name",
+        "frequency": "day",
+        "send_day": ["mon", "thu"], // empty = every day or can be multiple mon, tue, wed, thu, fri, sat, sun
+        "emails": ["recipient1@example.com", "recipient2@example.com"],
+        "what_stats": ["stats", "events", "urls"]
     }
 ]
 ```
+
+### Frequencies
+
+The `frequency` field in `websites_config.json` determines how often reports are sent:
+
+- `day`: Sends daily reports, every day or on the specified `send_day`.
+- `week`: Sends weekly reports on the specified `send_day`.
+- `month`: Sends reports on the first day of each month.
+- `quarter`: Sends reports on the first day of each quarter (January, April, July, October).
+- `year`: Sends reports on the first day of the year (January 1st).
 
 ---
 

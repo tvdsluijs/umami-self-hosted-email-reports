@@ -1,10 +1,34 @@
+"""
+📄 Report Generator
+
+This module provides functions to generate HTML reports with dynamic metrics and styling
+for website analytics. The reports are designed to be emailed as part of the Umami Email
+Reports script.
+
+Functions:
+- generate_table: Dynamically creates an HTML table from provided data.
+- get_styling: Reads CSS styles from a file or provides fallback styles.
+- generate_html_email: Generates an HTML email containing metrics and styling.
+"""
+
 from email.mime.text import MIMEText
 
-def generate_table(title_col, value_col, data):
-    """Generate an HTML table dynamically from provided data."""
+def generate_table(title_col, value_col, data, top:int=10):
+    """
+    Generate an HTML table dynamically from provided data.
+
+    Args:
+        title_col (str): The title of the first column.
+        value_col (str): The title of the second column.
+        data (list): A list of dictionaries containing 'label' and 'value' keys.
+
+    Returns:
+        str: An HTML table as a string.
+    """
     if not data:
         return ""  # Return empty string if no data is available
-    rows = "".join([f"<tr><td>{item['label']}</td><td>{item['value']}</td></tr>" for item in data[:10]])
+    # Generate rows for the first 10 items
+    rows = "".join([f"<tr><td>{item['label']}</td><td>{item['value']}</td></tr>" for item in data[:top]])
     return f"""
     <table class="table firstcolum">
         <tr>
@@ -15,7 +39,15 @@ def generate_table(title_col, value_col, data):
     """
 
 def get_styling(css_file_path="style.css"):
-    """Read and inline CSS from a file or provide a fallback style."""
+    """
+    Read and inline CSS from a file or provide a fallback style.
+
+    Args:
+        css_file_path (str): Path to the CSS file.
+
+    Returns:
+        str: A string containing CSS styles.
+    """
     try:
         with open(css_file_path, "r") as css_file:
             return css_file.read()
@@ -34,25 +66,34 @@ def get_styling(css_file_path="style.css"):
         .footer { text-align: center; font-size: 12px; color: #555; margin-top: 20px; }
         """
 
-def generate_html_email(company, frequency, mystats, what_stats, css_file_path="style.css", website_name:str=""):
-    """Generate an HTML email with dynamic metrics and styling."""
-    # Company details with fallback to avoid KeyErrors
+def generate_html_email(company, frequency, mystats, what_stats, css_file_path="style.css", website_name: str = "", top:int=10):
+    """
+    Generate an HTML email with dynamic metrics and styling.
+
+    Args:
+        company (dict): Dictionary containing company details like 'name', 'url', 'logo', 'email'.
+        frequency (str): The frequency of the report (e.g., 'daily', 'weekly').
+        mystats (dict): Dictionary containing analytics data.
+        what_stats (list): List of stat categories to include in the report.
+        css_file_path (str): Path to the CSS file for styling.
+        website_name (str): Name of the website for which the report is generated.
+
+    Returns:
+        MIMEText: An HTML email ready to be sent.
+    """
+    # Extract company details with fallbacks
     comp_name = company.get('name', 'Unknown Company')
     comp_url = company.get('url', '#')
     comp_logo = company.get('logo', '')
     comp_email = company.get('email', 'support@example.com')
 
-    # Inline CSS
+    # Inline CSS styling
     inline_css = get_styling(css_file_path)
 
-    # Metrics table
-    metrics_table = ""
+    # Generate metrics summary table
     stats = mystats.get("stats", {})
-    print(stats)
-    current = stats.get("current", {})
-    previous = stats.get("previous", {})
 
-    if current or previous:
+    if stats:
         metrics_table = f"""
         <table class="table">
             <tr>
@@ -60,25 +101,26 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
             </tr>
             <tr>
                 <td>Last {frequency}</td>
-                <td>{current.get('pageviews', 0)}</td>
-                <td>{current.get('visits', 0)}</td>
-                <td>{current.get('visitors', 0)}</td>
-                <td>{current.get('bounces', 0)}%</td>
-                <td>{current.get('totaltime', 0)}s</td>
+                <td>{stats.get('pageviews', {}).get('value', 0)}</td>
+                <td>{stats.get('visits', {}).get('value', 0)}</td>
+                <td>{stats.get('visitors', {}).get('value', 0)}</td>
+                <td>{stats.get('bounces', {}).get('value', 0)}%</td>
+                <td>{stats.get('totaltime', {}).get('value', 0)}s</td>
             </tr>
             <tr>
                 <td>Previous {frequency}</td>
-                <td>{previous.get('pageviews', 0)}</td>
-                <td>{previous.get('visits', 0)}</td>
-                <td>{previous.get('visitors', 0)}</td>
-                <td>{previous.get('bounces', 0)}%</td>
-                <td>{previous.get('totaltime', 0)}s</td>
+                <td>{stats.get('pageviews', {}).get('prev', 0)}</td>
+                <td>{stats.get('visits', {}).get('prev', 0)}</td>
+                <td>{stats.get('visitors', {}).get('prev', 0)}</td>
+                <td>{stats.get('bounces', {}).get('prev', 0)}%</td>
+                <td>{stats.get('totaltime', {}).get('prev', 0)}s</td>
             </tr>
         </table>
         """
+    else:
+        metrics_table = ""  # No data available, return an empty table
 
-
-    # Other tables for stats
+    # Generate additional tables for other stats
     pages_tables = ""
     stat_type_mapping = {
         "urls": {"col1": "Pages", "col2": "Views"},
@@ -92,19 +134,20 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
 
     for stat in what_stats or []:
         if stat == "stats":
-            continue  # Skip 'stats' since it's handled separately
+            continue  # Skip 'stats' as it's handled separately
         if stat not in stat_type_mapping:
-            print(f"Warning: Unsupported stat type '{stat}'. Skip for report.")
+            print(f"Warning: Unsupported stat type '{stat}'. Skipping.")
             continue
 
         stat_config = stat_type_mapping[stat]
         pages_tables += generate_table(
             stat_config["col1"],
             stat_config["col2"],
-            mystats.get(stat, [])
+            mystats.get(stat, []),
+            top
         )
 
-    # HTML content with inline CSS
+    # Construct the HTML content
     html_content = f"""
     <html>
     <head>
@@ -117,13 +160,13 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
             </div>
             <div class="header">
                 Welcome to your {frequency}ly website summary for {website_name}!<br>
-                Here are your top metrics from last {frequency}!
+                Here are your top metrics from the last {frequency}.
             </div>
             {metrics_table}
             {pages_tables}
             <div class="footer">
-                If you were not expecting this report, please contact support at <a href="mailto:{comp_email}>{comp_email}</a><br/>
-                Copyrights <a href="{comp_url}">{comp_name}</a>
+                If you were not expecting this report, please contact support at <a href="mailto:{comp_email}">{comp_email}</a>.<br/>
+                Copyright © <a href="{comp_url}">{comp_name}</a>
             </div>
         </div>
     </body>

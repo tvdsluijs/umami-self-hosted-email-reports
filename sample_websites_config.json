@@ -1,9 +1,11 @@
-// rename to websites_config.json and remove this line
+// rename to websites_config.json and remove this line, remove also other comments
 [
     {
         "website_id": "website-id-1",
         "name": "website 1 name",
         "frequency": "week",
+        "send_day": [], // will always be on first of the week or set one day, mon, tue, wed, thu, fri, sat, sun only pick one
+        "top": 5, // top 5 pages, referrers, browsers, oses, devices, countries
         "emails": ["recipient1@example.com", "recipient2@example.com"],
         "what_stats": ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"]
     },
@@ -11,7 +13,18 @@
         "website_id": "website-id-2",
         "name": "Website 2 name",
         "frequency": "monthly",
+        "send_day": [], // will always be on the first of the month
+        "top": 10, // top 10 pages, referrers, browsers, oses, devices, countries
         "emails": ["recipient3@example.com"],
         "what_stats": ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"]
+    },
+    {
+        "website_id": "website-id-3",
+        "name": "website 3 name",
+        "frequency": "day",
+        "send_day": ["mon", "thu"], // empty = every day or can be multiple mon, tue, wed, thu, fri, sat, sun
+        "top": 8, // top 8 pages, referrers, browsers, oses, devices, countries
+        "emails": ["recipient1@example.com", "recipient2@example.com"],
+        "what_stats": ["stats", "events", "urls"]
     }
 ]
