@@ -1,4 +1,4 @@
-# 📊 Self Hosted Umami Analytics Email Reports Python script
+# Self hosted Umami analytics eMail reports python script
 
 ## 🌟 Overview
 
@@ -10,13 +10,13 @@ This script is highly customizable and lets you style emails with a dedicated �
 
 ---
 
-## 🤔 Why I Built This
+## 🤔 Why I built this
 
 The self-hosted version of Umami lacks built-in email reporting, a feature available only in the 💰 paid Pro version. Since I wanted to host 🌐 Umami on my own server and still receive 📧 analytics reports via email, I created this script. While it’s still evolving and doesn’t include all the features of Umami’s Pro Email Reports, it’s a close approximation that you can run daily using a 🕒 cron job.
 
 ---
 
-## 🛠️ How This Can Help You
+## 🛠️ How this can help you
 
 - **📈 Automated Reporting**: Schedule 🕒 daily cron jobs to generate and email analytics reports.
 - **💵 Cost-Effective**: Avoid upgrading to the Pro version of 🌐 Umami.
@@ -37,7 +37,7 @@ The self-hosted version of Umami lacks built-in email reporting, a feature avail
 
 ## 🖥️ Prerequisites
 
-### 📚 Required Libraries
+### 📚 Required libraries
 
 - `requests`
 - `smtplib`
@@ -60,7 +60,7 @@ pip install -r requirements.txt
 python umami_report.py
 ```
 
-### 🐍 Python Version
+### 🐍 Python version
 
 - Requires Python 3.8 or higher.
 
@@ -83,7 +83,7 @@ python umami_report.py
 
 ---
 
-## 🗂️ Configuration Files
+## 🗂️ Configuration files
 
 ### `config.json`
 
