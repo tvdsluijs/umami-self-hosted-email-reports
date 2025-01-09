@@ -10,7 +10,6 @@ Functions:
 - get_styling: Reads CSS styles from a file or provides fallback styles.
 - generate_html_email: Generates an HTML email containing metrics and styling.
 """
-
 from email.mime.text import MIMEText
 
 def generate_table(title_col, value_col, data, top:int=10):
@@ -66,7 +65,7 @@ def get_styling(css_file_path="style.css"):
         .footer { text-align: center; font-size: 12px; color: #555; margin-top: 20px; }
         """
 
-def generate_html_email(company, frequency, mystats, what_stats, css_file_path="style.css", website_name: str = "", top:int=10):
+def generate_html_email(company, frequency, mystats, what_stats, css_file_path="style.css", website_name: str = "", top:int=10, translations:dict = {}):
     """
     Generate an HTML email with dynamic metrics and styling.
 
@@ -93,14 +92,18 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
     # Generate metrics summary table
     stats = mystats.get("stats", {})
 
+    # Construct the report header and footer
+    report_header = translations["report_header"].format(website_name=website_name, frequency_text=translations['frequency_options'], frequency_options_text=translations['frequency_options'])
+    report_footer = translations["report_footer"].format(comp_email=comp_email, comp_url=comp_url)
+
     if stats:
         metrics_table = f"""
         <table class="table">
             <tr>
-                <th></th><th>Views</th><th>Visits</th><th>Visitors</th><th>Bounce Rate</th><th>Visit Duration</th>
+                <th></th><th>{translations['views']}</th><th>{translations['visits']}</th><th>{translations['visitors']}</th><th>{translations['bounce_rate']}</th><th>{translations['visit_duration']}</th>
             </tr>
             <tr>
-                <td>Last {frequency}</td>
+                <td>Last {translations[frequency]}</td>
                 <td>{stats.get('pageviews', {}).get('value', 0)}</td>
                 <td>{stats.get('visits', {}).get('value', 0)}</td>
                 <td>{stats.get('visitors', {}).get('value', 0)}</td>
@@ -108,7 +111,7 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
                 <td>{stats.get('totaltime', {}).get('value', 0)}s</td>
             </tr>
             <tr>
-                <td>Previous {frequency}</td>
+                <td>Previous {translations[frequency]}</td>
                 <td>{stats.get('pageviews', {}).get('prev', 0)}</td>
                 <td>{stats.get('visits', {}).get('prev', 0)}</td>
                 <td>{stats.get('visitors', {}).get('prev', 0)}</td>
@@ -148,6 +151,7 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
         )
 
     # Construct the HTML content
+    # You are not allowed to remove the coded by line (footer)
     html_content = f"""
     <html>
     <head>
@@ -158,15 +162,12 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
             <div class="logo">
                 <img src="{comp_logo}" alt="{comp_name}" style="max-width: 100%; height: auto;">
             </div>
-            <div class="header">
-                Welcome to your {frequency}ly website summary for {website_name}!<br>
-                Here are your top metrics from the last {frequency}.
-            </div>
+            <div class="header">{report_header}</div>
             {metrics_table}
             {pages_tables}
             <div class="footer">
-                If you were not expecting this report, please contact support at <a href="mailto:{comp_email}">{comp_email}</a>.<br/>
-                Copyright © <a href="{comp_url}">{comp_name}</a>
+                {report_footer}<br/>
+                Coded with ☕, by <a href='https://github.com/tvdsluijs'>tvdsluijs</a>.
             </div>
         </div>
     </body>

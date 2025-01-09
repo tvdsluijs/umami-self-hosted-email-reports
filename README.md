@@ -35,6 +35,48 @@ The self-hosted version of Umami lacks built-in email reporting, a feature avail
 
 ---
 
+### **🌍 Supported Languages Section for README.md**
+
+The Umami Email Reports script supports a wide range of languages to make the reports accessible to as many users as possible. Below is the list of currently available languages:
+
+- **Dutch (Nederlands) – `nl.json`** *(Native Speaker)*
+- **English – `en.json`**
+- **German (Deutsch) – `de.json`**
+- **Italian (Italiano) – `it.json`**
+- **Spanish (Español) – `es.json`**
+- **French (Français) – `fr.json`**
+- **Portuguese (Português) – `pt.json`**
+- **Swedish (Svenska) – `sv.json`**
+- **Danish (Dansk) – `da.json`**
+- **Estonian (Eesti) – `et.json`**
+- **Finnish (Suomi) – `fi.json`**
+- **Icelandic (Íslenska) – `is.json`**
+- **Latvian (Latviešu) – `lv.json`**
+- **Lithuanian (Lietuvių) – `lt.json`**
+- **Norwegian (Norsk) – `no.json`**
+- **Czech (Čeština) – `cs.json` / `cz.json`**
+- **Polish (Polski) – `pl.json`**
+- **Slovak (Slovenčina) – `sk.json`**
+- **Hungarian (Magyar) – `hu.json`**
+- **Romanian (Română) – `ro.json`**
+- **Bulgarian (Български) – `bg.json`**
+- **Serbian (Српски) – `rs.json`**
+- **Slovenian (Slovenščina) – `si.json`**
+- **Croatian (Hrvatski) – `hr.json`**
+- **Ukrainian (Українська) – `ua.json`**
+- **Georgian (ქართული) – `ge.json`**
+- **Sample Placeholder – `sample.json`**
+
+---
+
+### **🌟 A Note About Translations**
+
+I am a native Dutch speaker, and I can confidently say that the Dutch, English, and German translations have been manually reviewed. For the remaining languages, I’ve used AI-generated translations to speed up the process and broaden the tool's reach.
+
+If you spot any mistakes or inconsistencies in the translations for your language, I’d greatly appreciate your help! Feel free to submit a **GitHub Issue** or, even better, a **Pull Request** with improvements to the respective language file. Your contributions help make this tool even better for everyone! 😊
+
+---
+
 ## 🖥️ Prerequisites
 
 ### 📚 Required libraries
@@ -123,6 +165,7 @@ Defines the 🌐 websites, their reporting frequency, recipients, and metrics to
         "website_id": "website-id-1",
         "name": "website 1 name",
         "frequency": "week",
+        "lang": "en",
         "send_day": [],
         "top": 10,
         "emails": ["recipient1@example.com", "recipient2@example.com"],
@@ -131,7 +174,8 @@ Defines the 🌐 websites, their reporting frequency, recipients, and metrics to
     {
         "website_id": "website-id-2",
         "name": "Website 2 name",
-        "frequency": "monthly",
+        "frequency": "month",
+        "lang": "nl",
         "send_day": [],
         "top": 5,
         "emails": ["recipient3@example.com"],
@@ -141,6 +185,7 @@ Defines the 🌐 websites, their reporting frequency, recipients, and metrics to
         "website_id": "website-id-3",
         "name": "website 3 name",
         "frequency": "day",
+        "lang": "de",
         "send_day": ["mon", "thu"],
         "emails": ["recipient1@example.com", "recipient2@example.com"],
         "what_stats": ["stats", "events", "urls"]
