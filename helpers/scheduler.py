@@ -66,4 +66,4 @@ def schedule_reports(websites, process_website):
                 # Wait for task completion and handle any exceptions
                 future.result()
             except Exception as e:
-                print(f"Error processing a website: {e}")
+                logger.error(f"Error processing a website: {e}")

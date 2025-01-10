@@ -52,5 +52,5 @@ def calculate_date_range(now, frequency):
 
     except Exception as e:
         # Handle unexpected errors and return default values
-        print(f"Error calculating date range: {e}")
+        logger.error(f"Error calculating date range: {e}")
         return 0, 0

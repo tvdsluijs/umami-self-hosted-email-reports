@@ -1,4 +1,7 @@
 
+import logging
+logger = logging.getLogger(__name__)
+
 def frequency_options(frequency, translations):
     try:
         if frequency == "day":
@@ -12,8 +15,8 @@ def frequency_options(frequency, translations):
 
         return ""
     except KeyError as e:
-        print(f"Error getting frequency options: {e}")
+        logger.error(f"Error getting frequency options: {e}")
         return ""
     except Exception as e:
-        print(f"Error getting frequency options: {e}")
+        logger.error(f"Error getting frequency options: {e}")
         return ""

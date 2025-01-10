@@ -54,7 +54,7 @@ def get_styling(css_file_path="style.css"):
         with open(css_file_path, "r") as css_file:
             return css_file.read()
     except FileNotFoundError:
-        print(f"Warning: CSS file '{css_file_path}' not found. Using default styling.")
+        logger.error(f"Warning: CSS file '{css_file_path}' not found. Using default styling.")
         # Fallback CSS in case the file is missing
         return """
         body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; }
@@ -142,7 +142,7 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
         if stat == "stats":
             continue  # Skip 'stats' as it's handled separately
         if stat not in stat_type_mapping:
-            print(f"Warning: Unsupported stat type '{stat}'. Skipping.")
+            logger.error(f"Warning: Unsupported stat type '{stat}'. Skipping.")
             continue
 
         stat_config = stat_type_mapping[stat]

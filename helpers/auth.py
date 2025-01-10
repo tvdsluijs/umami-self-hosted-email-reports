@@ -29,7 +29,7 @@ def authenticate(api_url: str, username: str, password: str):
     """
     # Ensure required parameters are provided
     if not api_url or not username or not password:
-        print("Authentication failed: Missing required parameters.")
+        logger.error("Authentication failed: Missing required parameters.")
         exit(1)
 
     # Construct the login URL
@@ -44,12 +44,12 @@ def authenticate(api_url: str, username: str, password: str):
         # Extract the token from the response
         token = response.json().get("token")
         if not token:
-            print("Authentication failed: No token received.")
+            logger.error("Authentication failed: No token received.")
             exit(1)
 
         return token
 
     except requests.exceptions.RequestException as e:
         # Handle request errors
-        print(f"Failed to authenticate: {e}")
+        logger.error(f"Failed to authenticate: {e}")
         exit(1)

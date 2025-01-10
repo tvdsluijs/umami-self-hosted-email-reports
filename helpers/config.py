@@ -31,5 +31,5 @@ def load_config(file_path):
             return json.load(f)
     except FileNotFoundError:
         # Handle missing file error
-        print(f"Configuration file {file_path} not found. Exiting.")
+        logger.error(f"Configuration file {file_path} not found. Exiting.")
         exit(1)

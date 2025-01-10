@@ -25,7 +25,6 @@ License: MIT
 """
 import os
 import re
-import json
 import logging
 from logging.handlers import TimedRotatingFileHandler
 from sys import exit
@@ -36,6 +35,7 @@ from helpers.frequency_options import frequency_options
 from helpers.report import generate_html_email
 from helpers.email import send_email
 from helpers.umami import get_umami_data
+from helpers.translation_validator import load_smart_translation
 from helpers.scheduler import schedule_reports, should_send_report
 from helpers.date_ranges import calculate_date_range
 
@@ -75,10 +75,23 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-# Vertalingen laden
+
 def load_translation(lang_code):
-    with open(f"locale/{lang_code}.json", 'r') as f:
-        return json.load(f)
+    """
+    Load a translation file with automatic fallback for missing translations.
+
+    Args:
+        lang_code (str): Language code for the translation file
+
+    Returns:
+        dict: Complete translation dictionary with all required keys
+    """
+    try:
+        return load_smart_translation(lang_code)
+    except Exception as e:
+        logger.error(f"Error loading translations: {e}")
+        logger.warning("Falling back to English translations")
+        return load_smart_translation('en')
 
 def process_website(site, now):
     try:
@@ -100,7 +113,7 @@ def process_website(site, now):
         recipients = site["emails"]  # List of email recipients
 
         if not website_id or not website_name or not recipients:
-            print("Website ID, name, and email recipients must be provided, there is a problem with your websites_config.json.")
+            logger.error("Website ID, name, and email recipients must be provided, there is a problem with your websites_config.json.")
             exit(1)
 
         what_stats = site.get("what_stats", ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"])  # List of metrics to include in the report
@@ -134,8 +147,7 @@ def process_website(site, now):
             # Send the report via email
             send_email(subject, report, recipients, SMTP_CONFIG)
     except KeyError as e:
-        print(f"Error getting frequency options: {e}")
-        return ""
+        logger.error(f"Error getting frequency options: {e}")
     except Exception as e:
         logger.error(f"Error processing website: {e}")
 

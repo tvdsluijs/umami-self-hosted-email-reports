@@ -51,4 +51,4 @@ def send_email(subject, email_content, recipient_emails, smtp_config):
 
     except Exception as e:
         # Handle any exceptions during the email sending process
-        print(f"Failed to send email: {e}")
+        logger.error(f"Failed to send email: {e}")

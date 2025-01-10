@@ -124,7 +124,7 @@ def get_umami_data(api_url, token, website_id, range_start, range_end, frequency
     try:
         for stat in what_stats or []:
             if stat not in stat_type_mapping:
-                print(f"Warning: Unsupported stat type '{stat}'. Skipping.")
+                logger.error(f"Warning: Unsupported stat type '{stat}'. Skipping.")
                 continue
 
             stat_config = stat_type_mapping[stat]
@@ -150,8 +150,8 @@ def get_umami_data(api_url, token, website_id, range_start, range_end, frequency
 
         return mystats
     except requests.exceptions.RequestException as e:
-        print(f"Failed to fetch stats for website {website_id}: {e}")
+        logger.error(f"Failed to fetch stats for website {website_id}: {e}")
         return {}
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logger.error(f"An error occurred: {e}")
         return {}
