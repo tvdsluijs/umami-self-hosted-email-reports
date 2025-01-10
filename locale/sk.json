@@ -10,6 +10,7 @@
     "year": "Rok",
     "yearly": "Ročný",
     "views": "Zobrazenia",
+    "visits": "Návštevy",
     "visitors": "Návštevníci",
     "urls": "URL",
     "referrers": "Odkazujúci",
@@ -29,5 +30,5 @@
     "average_time": "Priemerný čas",
     "visit_duration": "Dĺžka návštevy",
     "report_header": "Vitajte vo vašom {frequency_options_text} zhrnutí webovej stránky pre {website_name}!<br/> Tu sú vaše najlepšie metriky z posledného {frequency_text}.",
-    "footer_message": "Ak ste túto správu neočakávali, kontaktujte prosím podporu na <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Ak ste túto správu neočakávali, kontaktujte prosím podporu na <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

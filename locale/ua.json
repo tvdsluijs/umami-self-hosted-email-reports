@@ -10,6 +10,7 @@
     "year": "Рік",
     "yearly": "Щорічно",
     "views": "Перегляди",
+    "visits": "Відвідування",
     "visitors": "Відвідувачі",
     "urls": "URL-адреси",
     "referrers": "Реферери",
@@ -29,5 +30,5 @@
     "average_time": "Середній час",
     "visit_duration": "Тривалість візиту",
     "report_header": "Ласкаво просимо до вашого {frequency_options_text} підсумку вебсайту для {website_name}!<br/> Ось ваші основні показники за останній {frequency_text}.",
-    "footer_message": "Якщо ви не очікували цього звіту, будь ласка, зв'яжіться з підтримкою за адресою <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Якщо ви не очікували цього звіту, будь ласка, зв'яжіться з підтримкою за адресою <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

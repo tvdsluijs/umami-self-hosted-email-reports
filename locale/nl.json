@@ -1,15 +1,16 @@
 {
     "day": "Dag",
-    "daily": "Dagelijks",
+    "daily": "Dagelijkse",
     "week": "Week",
-    "weekly": "Wekelijks",
+    "weekly": "Wekelijkse",
     "month": "Maand",
     "monthly": "Maandelijks",
     "quarter": "Kwartaal",
     "quarterly": "Kwartaal",
     "year": "Jaar",
-    "yearly": "Jaarlijks",
+    "yearly": "Jaarlijkse",
     "views": "Bezoeken",
+    "visits": "Bezoeken",
     "visitors": "Bezoekers",
     "urls": "URLs",
     "referrers": "Verwijzers",
@@ -29,5 +30,5 @@
     "average_time": "Gemiddelde Tijd",
     "visit_duration": "Bezoekduur",
     "report_header": "Welkom bij uw {frequency_options_text} website samenvatting voor {website_name}!<br/> Hier zijn uw belangrijkste statistieken van de afgelopen {frequency_text}.",
-    "footer_message": "Als u dit rapport niet verwachtte, neem dan contact op met de ondersteuning op <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Als u dit rapport niet verwachtte, neem dan contact op met de ondersteuning op <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

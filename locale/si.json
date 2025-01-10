@@ -10,6 +10,7 @@
     "year": "Leto",
     "yearly": "Letno",
     "views": "Ogledi",
+    "visits": "Obiski",
     "visitors": "Obiskovalci",
     "urls": "URL-ji",
     "referrers": "Napotitelji",
@@ -29,5 +30,5 @@
     "average_time": "Povprečni čas",
     "visit_duration": "Trajanje obiska",
     "report_header": "Dobrodošli v {frequency_options_text} povzetku spletne strani {website_name}!<br/> Tukaj so vaši najpomembnejši metrični podatki iz zadnjega {frequency_text}.",
-    "footer_message": "Če tega poročila niste pričakovali, se obrnite na podporo na <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Če tega poročila niste pričakovali, se obrnite na podporo na <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

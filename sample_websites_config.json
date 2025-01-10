@@ -1,7 +1,7 @@
 /**
 Remove these comment lines and save this file in the same folder as the script,
 rename to websites_config.json and fill in the details for the websites you want to monitor.
-
+frequency: day, week, month, year
 send_day: empty = every day or can be multiple mon, tue, wed, thu, fri, sat, sun
 top: numer of top pages to show [3, 5 ,10], referrers, browsers, oses, devices, countries
 what_stats: stats, events, urls, referrers, browsers, oses, devices, countries

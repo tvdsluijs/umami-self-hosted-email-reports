@@ -10,6 +10,7 @@
     "year": "Aasta",
     "yearly": "Iga-aastane",
     "views": "Vaatamised",
+    "visits": "Külastused",
     "visitors": "Külastajad",
     "urls": "URL-id",
     "referrers": "Viitajad",
@@ -29,5 +30,5 @@
     "average_time": "Keskmine aeg",
     "visit_duration": "Külastuse kestus",
     "report_header": "Tere tulemast teie {frequency_options_text} veebisaidi kokkuvõttesse {website_name}!<br/> Siin on teie viimase {frequency_text} parimad mõõdikud.",
-    "footer_message": "Kui te ei oodanud seda aruannet, võtke ühendust toega aadressil <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Kui te ei oodanud seda aruannet, võtke ühendust toega aadressil <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

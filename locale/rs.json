@@ -10,6 +10,7 @@
     "year": "Godina",
     "yearly": "Godišnje",
     "views": "Pregledi",
+    "visits": "Posete",
     "visitors": "Posetioci",
     "urls": "URL-ovi",
     "referrers": "Preporuke",
@@ -29,5 +30,5 @@
     "average_time": "Prosečno vreme",
     "visit_duration": "Trajanje posete",
     "report_header": "Dobrodošli u {frequency_options_text} sažetak websajta {website_name}!<br/> Ovde su vaši najvažniji metrički podaci iz poslednje {frequency_text}.",
-    "footer_message": "Ako niste očekivali ovaj izveštaj, molimo vas da kontaktirate podršku na <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Ako niste očekivali ovaj izveštaj, molimo vas da kontaktirate podršku na <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

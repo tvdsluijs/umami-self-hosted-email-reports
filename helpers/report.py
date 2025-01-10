@@ -69,111 +69,119 @@ def get_styling(css_file_path="style.css"):
         """
 
 def generate_html_email(company, frequency, mystats, what_stats, css_file_path="style.css", website_name: str = "", top:int=10, translations:dict = {}):
-    """
-    Generate an HTML email with dynamic metrics and styling.
-
-    Args:
-        company (dict): Dictionary containing company details like 'name', 'url', 'logo', 'email'.
-        frequency (str): The frequency of the report (e.g., 'daily', 'weekly').
-        mystats (dict): Dictionary containing analytics data.
-        what_stats (list): List of stat categories to include in the report.
-        css_file_path (str): Path to the CSS file for styling.
-        website_name (str): Name of the website for which the report is generated.
-
-    Returns:
-        MIMEText: An HTML email ready to be sent.
-    """
-    # Extract company details with fallbacks
-    comp_name = company.get('name', 'Unknown Company')
-    comp_url = company.get('url', '#')
-    comp_logo = company.get('logo', '')
-    comp_email = company.get('email', 'support@example.com')
-
-    # Inline CSS styling
-    inline_css = get_styling(css_file_path)
-
-    # Generate metrics summary table
-    stats = mystats.get("stats", {})
-
-    # Construct the report header and footer
-    report_header = translations["report_header"].format(website_name=website_name, frequency_text=translations['frequency_options'], frequency_options_text=translations['frequency_options'])
-    report_footer = translations["report_footer"].format(comp_email=comp_email, comp_url=comp_url)
-
-    if stats:
-        metrics_table = f"""
-        <table class="table">
-            <tr>
-                <th></th><th>{translations['views']}</th><th>{translations['visits']}</th><th>{translations['visitors']}</th><th>{translations['bounce_rate']}</th><th>{translations['visit_duration']}</th>
-            </tr>
-            <tr>
-                <td>Last {translations[frequency]}</td>
-                <td>{stats.get('pageviews', {}).get('value', 0)}</td>
-                <td>{stats.get('visits', {}).get('value', 0)}</td>
-                <td>{stats.get('visitors', {}).get('value', 0)}</td>
-                <td>{stats.get('bounces', {}).get('value', 0)}%</td>
-                <td>{stats.get('totaltime', {}).get('value', 0)}s</td>
-            </tr>
-            <tr>
-                <td>Previous {translations[frequency]}</td>
-                <td>{stats.get('pageviews', {}).get('prev', 0)}</td>
-                <td>{stats.get('visits', {}).get('prev', 0)}</td>
-                <td>{stats.get('visitors', {}).get('prev', 0)}</td>
-                <td>{stats.get('bounces', {}).get('prev', 0)}%</td>
-                <td>{stats.get('totaltime', {}).get('prev', 0)}s</td>
-            </tr>
-        </table>
+    try:
         """
-    else:
-        metrics_table = ""  # No data available, return an empty table
+        Generate an HTML email with dynamic metrics and styling.
 
-    # Generate additional tables for other stats
-    pages_tables = ""
-    stat_type_mapping = {
-        "urls": {"col1": "Pages", "col2": "Views"},
-        "referrers": {"col1": "Referrers", "col2": "Views"},
-        "browsers": {"col1": "Browsers", "col2": "Views"},
-        "oses": {"col1": "Operating Systems", "col2": "Views"},
-        "devices": {"col1": "Devices", "col2": "Views"},
-        "countries": {"col1": "Countries", "col2": "Views"},
-        "events": {"col1": "Events", "col2": "Views"}
-    }
+        Args:
+            company (dict): Dictionary containing company details like 'name', 'url', 'logo', 'email'.
+            frequency (str): The frequency of the report (e.g., 'daily', 'weekly').
+            mystats (dict): Dictionary containing analytics data.
+            what_stats (list): List of stat categories to include in the report.
+            css_file_path (str): Path to the CSS file for styling.
+            website_name (str): Name of the website for which the report is generated.
 
-    for stat in what_stats or []:
-        if stat == "stats":
-            continue  # Skip 'stats' as it's handled separately
-        if stat not in stat_type_mapping:
-            logger.error(f"Warning: Unsupported stat type '{stat}'. Skipping.")
-            continue
+        Returns:
+            MIMEText: An HTML email ready to be sent.
+        """
+        # Extract company details with fallbacks
+        comp_name = company.get('name', 'Unknown Company')
+        comp_url = company.get('url', '#')
+        comp_logo = company.get('logo', '')
+        comp_email = company.get('email', 'support@example.com')
 
-        stat_config = stat_type_mapping[stat]
-        pages_tables += generate_table(
-            stat_config["col1"],
-            stat_config["col2"],
-            mystats.get(stat, []),
-            top
-        )
+        # Inline CSS styling
+        inline_css = get_styling(css_file_path)
 
-    # Construct the HTML content
-    # You are not allowed to remove the coded by line (footer)
-    html_content = f"""
-    <html>
-    <head>
-        <style>{inline_css}</style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="logo">
-                <img src="{comp_logo}" alt="{comp_name}" style="max-width: 100%; height: auto;">
+        # Generate metrics summary table
+        stats = mystats.get("stats", {})
+        # Construct the report header and footer
+        report_header = translations["report_header"].format(website_name=website_name,
+                                                             frequency_text=translations[frequency],
+                                                             frequency_options_text=translations['frequency_options']).capitalize()
+        report_footer = translations["report_footer"].format(comp_email=comp_email, comp_url=comp_url).capitalize()
+
+        if stats:
+            metrics_table = f"""
+            <table class="table">
+                <tr>
+                    <th></th><th>{translations['views']}</th><th>{translations['visits']}</th><th>{translations['visitors']}</th><th>{translations['bounce_rate']}</th><th>{translations['visit_duration']}</th>
+                </tr>
+                <tr>
+                    <td>Last {translations[frequency]}</td>
+                    <td>{stats.get('pageviews', {}).get('value', 0)}</td>
+                    <td>{stats.get('visits', {}).get('value', 0)}</td>
+                    <td>{stats.get('visitors', {}).get('value', 0)}</td>
+                    <td>{stats.get('bounces', {}).get('value', 0)}%</td>
+                    <td>{stats.get('totaltime', {}).get('value', 0)}s</td>
+                </tr>
+                <tr>
+                    <td>Previous {translations[frequency]}</td>
+                    <td>{stats.get('pageviews', {}).get('prev', 0)}</td>
+                    <td>{stats.get('visits', {}).get('prev', 0)}</td>
+                    <td>{stats.get('visitors', {}).get('prev', 0)}</td>
+                    <td>{stats.get('bounces', {}).get('prev', 0)}%</td>
+                    <td>{stats.get('totaltime', {}).get('prev', 0)}s</td>
+                </tr>
+            </table>
+            """
+        else:
+            metrics_table = ""  # No data available, return an empty table
+
+        # Generate additional tables for other stats
+        pages_tables = ""
+        stat_type_mapping = {
+            "urls": {"col1": "Pages", "col2": "Views"},
+            "referrers": {"col1": "Referrers", "col2": "Views"},
+            "browsers": {"col1": "Browsers", "col2": "Views"},
+            "oses": {"col1": "Operating Systems", "col2": "Views"},
+            "devices": {"col1": "Devices", "col2": "Views"},
+            "countries": {"col1": "Countries", "col2": "Views"},
+            "events": {"col1": "Events", "col2": "Views"}
+        }
+
+        for stat in what_stats or []:
+            if stat == "stats":
+                continue  # Skip 'stats' as it's handled separately
+            if stat not in stat_type_mapping:
+                logger.error(f"Warning: Unsupported stat type '{stat}'. Skipping.")
+                continue
+
+            stat_config = stat_type_mapping[stat]
+            pages_tables += generate_table(
+                stat_config["col1"],
+                stat_config["col2"],
+                mystats.get(stat, []),
+                top
+            )
+
+        # Construct the HTML content
+        # You are not allowed to remove the coded by line (footer)
+        html_content = f"""
+        <html>
+        <head>
+            <style>{inline_css}</style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="logo">
+                    <img src="{comp_logo}" alt="{comp_name}" style="max-width: 100%; height: auto;">
+                </div>
+                <div class="header">{report_header}</div>
+                {metrics_table}
+                {pages_tables}
+                <div class="footer">
+                    {report_footer}<br/>
+                    Coded with ☕, by <a href='https://github.com/tvdsluijs'>tvdsluijs</a>.
+                </div>
             </div>
-            <div class="header">{report_header}</div>
-            {metrics_table}
-            {pages_tables}
-            <div class="footer">
-                {report_footer}<br/>
-                Coded with ☕, by <a href='https://github.com/tvdsluijs'>tvdsluijs</a>.
-            </div>
-        </div>
-    </body>
-    </html>
-    """
-    return MIMEText(html_content, "html")
+        </body>
+        </html>
+        """
+        return MIMEText(html_content, "html")
+    except KeyError as e:
+        logger.error(f"Error : {e}")
+        return False
+    except Exception as e:
+        logger.error(f"Error : {e}")
+        return False

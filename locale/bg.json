@@ -10,6 +10,7 @@
     "year": "Година",
     "yearly": "Годишно",
     "views": "Преглеждания",
+    "visits": "Посещения",
     "visitors": "Посетители",
     "urls": "URL адреси",
     "referrers": "Препращачи",
@@ -29,5 +30,5 @@
     "average_time": "Средно време",
     "visit_duration": "Продължителност на посещението",
     "report_header": "Добре дошли в {frequency_options_text} обобщение на уебсайта {website_name}!<br/> Ето вашите най-важни метрики от последната {frequency_text}.",
-    "footer_message": "Ако не сте очаквали този доклад, моля, свържете се с поддръжката на <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Ако не сте очаквали този доклад, моля, свържете се с поддръжката на <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

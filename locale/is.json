@@ -10,6 +10,7 @@
     "year": "Ár",
     "yearly": "Árlega",
     "views": "Skoðanir",
+    "visits": "Heimsóknir",
     "visitors": "Gestir",
     "urls": "URL-slóðir",
     "referrers": "Tilvísanir",
@@ -29,5 +30,5 @@
     "average_time": "Meðaltími",
     "visit_duration": "Heimsóknartími",
     "report_header": "Velkomin í {frequency_options_text} vefsíðu yfirlit fyrir {website_name}!<br/> Hér eru helstu mælingar þínar frá síðustu {frequency_text}.",
-    "footer_message": "Ef þú bjóst ekki við þessari skýrslu, vinsamlegast hafðu samband við stuðning á <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Ef þú bjóst ekki við þessari skýrslu, vinsamlegast hafðu samband við stuðning á <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

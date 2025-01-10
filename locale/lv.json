@@ -10,6 +10,7 @@
     "year": "Gads",
     "yearly": "Gada",
     "views": "Skatījumi",
+    "visits": "Apmeklējumi",
     "visitors": "Apmeklētāji",
     "urls": "URL",
     "referrers": "Atsauces",
@@ -29,5 +30,5 @@
     "average_time": "Vidējais laiks",
     "visit_duration": "Apmeklējuma ilgums",
     "report_header": "Laipni lūdzam jūsu {frequency_options_text} vietnes kopsavilkumā par {website_name}!<br/> Šeit ir jūsu galvenie rādītāji no pēdējā {frequency_text}.",
-    "footer_message": "Ja negaidījāt šo ziņojumu, lūdzu, sazinieties ar atbalstu pa e-pastu <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Ja negaidījāt šo ziņojumu, lūdzu, sazinieties ar atbalstu pa e-pastu <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

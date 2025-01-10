@@ -10,6 +10,7 @@
     "year": "წელი",
     "yearly": "ყოველწლიური",
     "views": "ნახვები",
+    "visits": "ვიზიტები",
     "visitors": "მნახველები",
     "urls": "URL-ები",
     "referrers": "რეფერერები",
@@ -29,5 +30,5 @@
     "average_time": "საშუალო დრო",
     "visit_duration": "ვიზიტის ხანგრძლივობა",
     "report_header": "კეთილი იყოს თქვენი {frequency_options_text} ვებგვერდის შეჯამება {website_name}!<br/> აქ არის თქვენი მთავარი მეტრიკები ბოლო {frequency_text}.",
-    "footer_message": "თუ თქვენ არ ელოდით ამ ანგარიშს, გთხოვთ, დაუკავშირდეთ მხარდაჭერას მისამართზე <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "თუ თქვენ არ ელოდით ამ ანგარიშს, გთხოვთ, დაუკავშირდეთ მხარდაჭერას მისამართზე <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

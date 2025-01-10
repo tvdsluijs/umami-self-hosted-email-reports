@@ -10,6 +10,7 @@
     "year": "Vuosi",
     "yearly": "Vuosittain",
     "views": "Näytöt",
+    "visits": "Käynnit",
     "visitors": "Vierailijat",
     "urls": "URL-osoitteet",
     "referrers": "Viittaajat",
@@ -29,5 +30,5 @@
     "average_time": "Keskimääräinen aika",
     "visit_duration": "Vierailun kesto",
     "report_header": "Tervetuloa {frequency_options_text} verkkosivustosi yhteenvetoon {website_name}!<br/> Tässä ovat viimeisen {frequency_text} parhaat mittarisi.",
-    "footer_message": "Jos et odottanut tätä raporttia, ota yhteyttä tukeen osoitteessa <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Jos et odottanut tätä raporttia, ota yhteyttä tukeen osoitteessa <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

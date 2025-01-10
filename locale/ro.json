@@ -10,6 +10,7 @@
     "year": "An",
     "yearly": "Anual",
     "views": "Vizualizări",
+    "visits": "Vizite",
     "visitors": "Vizitatori",
     "urls": "URL-uri",
     "referrers": "Referenți",
@@ -29,5 +30,5 @@
     "average_time": "Timp mediu",
     "visit_duration": "Durata vizitei",
     "report_header": "Bine ați venit la rezumatul {frequency_options_text} al site-ului {website_name}!<br/> Iată cele mai importante metrici din ultima {frequency_text}.",
-    "footer_message": "Dacă nu ați așteptat acest raport, vă rugăm să contactați suportul la <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Dacă nu ați așteptat acest raport, vă rugăm să contactați suportul la <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

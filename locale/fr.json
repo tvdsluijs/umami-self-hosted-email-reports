@@ -10,6 +10,7 @@
     "year": "Année",
     "yearly": "Annuel",
     "views": "Vues",
+    "visits": "Visites",
     "visitors": "Visiteurs",
     "urls": "URLs",
     "referrers": "Référents",
@@ -29,5 +30,5 @@
     "average_time": "Temps moyen",
     "visit_duration": "Durée de la visite",
     "report_header": "Bienvenue dans votre résumé de site Web {frequency_options_text} pour {website_name}!<br/> Voici vos principales métriques des derniers {frequency_text}.",
-    "footer_message": "Si vous ne vous attendiez pas à ce rapport, veuillez contacter le support à <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Si vous ne vous attendiez pas à ce rapport, veuillez contacter le support à <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

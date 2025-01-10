@@ -10,6 +10,7 @@
     "year": "År",
     "yearly": "Årlig",
     "views": "Visninger",
+    "visits": "Besøg",
     "visitors": "Besøgende",
     "urls": "URL'er",
     "referrers": "Henvisninger",
@@ -29,5 +30,5 @@
     "average_time": "Gennemsnitstid",
     "visit_duration": "Besøgsvarighed",
     "report_header": "Velkommen til din {frequency_options_text} webstedsoversigt for {website_name}!<br/> Her er dine topmålinger fra de sidste {frequency_text}.",
-    "footer_message": "Hvis du ikke forventede denne rapport, bedes du kontakte support på <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Hvis du ikke forventede denne rapport, bedes du kontakte support på <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

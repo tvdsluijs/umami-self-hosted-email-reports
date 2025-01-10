@@ -10,6 +10,7 @@
     "year": "Year",
     "yearly": "Yearly",
     "views": "Views",
+    "visits": "Visits",
     "visitors": "Visitors",
     "urls": "URLs",
     "referrers": "Referrers",
@@ -29,5 +30,5 @@
     "average_time": "Average Time",
     "visit_duration": "Visit Duration",
     "report_header": "Welcome to your {frequency_options_text} website summary for {website_name}!<br/> Here are your top metrics from the last {frequency_text}.",
-    "footer_message": "If you were not expecting this report, please contact support at <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "If you were not expecting this report, please contact support at <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

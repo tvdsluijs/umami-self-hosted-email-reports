@@ -10,6 +10,7 @@
     "year": "Rok",
     "yearly": "Rocznie",
     "views": "Wyświetlenia",
+    "visits": "Wizyty",
     "visitors": "Odwiedzający",
     "urls": "URL",
     "referrers": "Odsyłacze",
@@ -29,5 +30,5 @@
     "average_time": "Średni czas",
     "visit_duration": "Czas wizyty",
     "report_header": "Witamy w twoim {frequency_options_text} podsumowaniu strony internetowej dla {website_name}!<br/> Oto twoje najlepsze metryki z ostatniego {frequency_text}.",
-    "footer_message": "Jeśli nie spodziewałeś się tego raportu, skontaktuj się z pomocą techniczną pod adresem <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Jeśli nie spodziewałeś się tego raportu, skontaktuj się z pomocą techniczną pod adresem <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

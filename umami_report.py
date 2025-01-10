@@ -139,17 +139,15 @@ def process_website(site, now):
             css_file_path = os.path.join(current_dir, css_file)
 
             # Generate the HTML email report
-            report = generate_html_email(COMPANY, frequency, stats, what_stats, css_file_path, website_name, top, translations)
+            if(report := generate_html_email(COMPANY, frequency, stats, what_stats, css_file_path, website_name, top, translations)):
+                subject = f"{translations['frequency_options']} Website analytics report for {website_name}"
+                # Send the report via email
+                send_email(subject, report, recipients, SMTP_CONFIG)
 
-            # Compose the subject line for the email
-            subject = f"{frequency.capitalize()}ly Website Report for {website_name}"
-
-            # Send the report via email
-            send_email(subject, report, recipients, SMTP_CONFIG)
     except KeyError as e:
-        logger.error(f"Error getting frequency options: {e}")
+        logger.error(f"Error key not found in process_website: {e}")
     except Exception as e:
-        logger.error(f"Error processing website: {e}")
+        logger.error(f"Error processing process_website: {e}")
 
 if __name__ == "__main__":
     """

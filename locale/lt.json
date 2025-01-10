@@ -10,6 +10,7 @@
     "year": "Metai",
     "yearly": "Metinis",
     "views": "Peržiūros",
+    "visits": "Apsilankymai",
     "visitors": "Lankytojai",
     "urls": "URL",
     "referrers": "Nukreipėjai",
@@ -29,5 +30,5 @@
     "average_time": "Vidutinis laikas",
     "visit_duration": "Apsilankymo trukmė",
     "report_header": "Sveiki atvykę į jūsų {frequency_options_text} svetainės santrauką {website_name}!<br/> Čia yra jūsų pagrindiniai rodikliai iš paskutinio {frequency_text}.",
-    "footer_message": "Jei nesitikėjote šios ataskaitos, susisiekite su palaikymo tarnyba el. paštu <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Jei nesitikėjote šios ataskaitos, susisiekite su palaikymo tarnyba el. paštu <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

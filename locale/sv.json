@@ -10,6 +10,7 @@
     "year": "År",
     "yearly": "Årlig",
     "views": "Visningar",
+    "visits": "Besök",
     "visitors": "Besökare",
     "urls": "URLs",
     "referrers": "Hänvisningar",
@@ -29,5 +30,5 @@
     "average_time": "Genomsnittlig tid",
     "visit_duration": "Besökstid",
     "report_header": "Välkommen till din {frequency_options_text} webbplatsöversikt för {website_name}!<br/> Här är dina toppstatistik från de senaste {frequency_text}.",
-    "footer_message": "Om du inte förväntade dig denna rapport, vänligen kontakta supporten på <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Om du inte förväntade dig denna rapport, vänligen kontakta supporten på <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

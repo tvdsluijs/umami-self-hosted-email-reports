@@ -10,6 +10,7 @@
     "year": "Év",
     "yearly": "Éves",
     "views": "Megtekintések",
+    "visits": "Látogatások",
     "visitors": "Látogatók",
     "urls": "URL-ek",
     "referrers": "Hivatkozók",
@@ -29,5 +30,5 @@
     "average_time": "Átlagos idő",
     "visit_duration": "Látogatás időtartama",
     "report_header": "Üdvözöljük a(z) {website_name} {frequency_options_text} weboldal összefoglalójában!<br/> Itt vannak az elmúlt {frequency_text} legfontosabb mutatói.",
-    "footer_message": "Ha nem számított erre a jelentésre, kérjük, lépjen kapcsolatba a támogatással a következő címen: <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
+    "report_footer": "Ha nem számított erre a jelentésre, kérjük, lépjen kapcsolatba a támogatással a következő címen: <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }
