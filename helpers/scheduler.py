@@ -8,9 +8,11 @@ Functions:
 - should_send_report: Determines if a report should be sent based on frequency and specified days.
 - schedule_reports: Executes the report generation for multiple websites concurrently.
 """
-
+import logging
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
+
+logger = logging.getLogger(__name__)
 
 def should_send_report(frequency, send_day):
     """

@@ -3,6 +3,8 @@
     "daily": "Daily",
     "week": "Week",
     "weekly": "Weekly",
+    "month": "Month",
+    "monthly": "Monthly",
     "quarter": "Quarter",
     "quarterly": "Quarterly",
     "year": "Year",

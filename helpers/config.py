@@ -7,8 +7,10 @@ used by the Umami Email Reports script.
 Functions:
 - load_config: Loads and returns the contents of a configuration file as a dictionary.
 """
-
+import logging
 import json
+
+logger = logging.getLogger(__name__)
 
 def load_config(file_path):
     """

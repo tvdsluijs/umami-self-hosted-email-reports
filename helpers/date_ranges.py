@@ -7,8 +7,10 @@ analytics reports based on a specified frequency.
 Functions:
 - calculate_date_range: Computes the start and end dates for a report based on frequency.
 """
-
+import logging
 from datetime import timedelta
+
+logger = logging.getLogger(__name__)
 
 def calculate_date_range(now, frequency):
     """

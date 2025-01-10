@@ -7,9 +7,11 @@ customizable subject lines, email content, and recipient lists.
 Functions:
 - send_email: Sends an email with the given content to specified recipients.
 """
-
+import logging
 import smtplib
 from email.mime.multipart import MIMEMultipart
+
+logger = logging.getLogger(__name__)
 
 def send_email(subject, email_content, recipient_emails, smtp_config):
     """

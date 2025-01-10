@@ -7,8 +7,10 @@ a bearer token for subsequent API requests.
 Functions:
 - authenticate: Logs in to the Umami API and returns an authentication token.
 """
-
+import logging
 import requests
+
+logger = logging.getLogger(__name__)
 
 def authenticate(api_url: str, username: str, password: str):
     """

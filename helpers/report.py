@@ -10,7 +10,10 @@ Functions:
 - get_styling: Reads CSS styles from a file or provides fallback styles.
 - generate_html_email: Generates an HTML email containing metrics and styling.
 """
+import logging
 from email.mime.text import MIMEText
+
+logger = logging.getLogger(__name__)
 
 def generate_table(title_col, value_col, data, top:int=10):
     """

@@ -24,7 +24,10 @@ Contact: [📧 Email](mailto:theo@vandersluijs.nl)
 License: MIT
 """
 import os
+import re
 import json
+import logging
+from logging.handlers import TimedRotatingFileHandler
 from sys import exit
 # Import helper functions and modules
 from helpers.config import load_config
@@ -48,63 +51,93 @@ SMTP_CONFIG = CONFIG["smtp"]  # SMTP configuration for sending emails
 
 BEARER_TOKEN = None  # Global variable for storing the Umami API authentication token
 
+# Configure logging
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
+log_handler = TimedRotatingFileHandler(
+    'logs/umami_report.log',
+    when='midnight',
+    interval=1,
+    backupCount=7
+)
+log_handler.suffix = "%Y-%m-%d"
+log_handler.extMatch = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+logging.basicConfig(
+    level=logging.ERROR,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        log_handler,
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
 # Vertalingen laden
 def load_translation(lang_code):
-    with open(f"{lang_code}.json", 'r') as f:
+    with open(f"locale/{lang_code}.json", 'r') as f:
         return json.load(f)
 
 def process_website(site, now):
-    """
-    Process a single website to determine if a report should be sent,
-    fetch data, generate the report, and send it via email.
+    try:
+        """
+        Process a single website to determine if a report should be sent,
+        fetch data, generate the report, and send it via email.
 
-    Args:
-        site (dict): The website configuration dictionary.
-        now (datetime): The current date and time.
-    """
-    # Extract website-specific configuration
-    lang = site.get('lang', 'en')  # Language code for translations
-    frequency = site.get('frequency', 'daily')  # Frequency of the report (default: daily)
-    send_day = site.get('send_day', [])  # Days to send the report (e.g., ["mon", "fri"])
+        Args:
+            site (dict): The website configuration dictionary.
+            now (datetime): The current date and time.
+        """
+        # Extract website-specific configuration
+        lang = site.get('lang', 'en')  # Language code for translations
+        frequency = site.get('frequency', 'daily')  # Frequency of the report (default: daily)
+        send_day = site.get('send_day', [])  # Days to send the report (e.g., ["mon", "fri"])
 
-    website_id = site["website_id"]  # Unique identifier for the website in Umami
-    website_name = site["name"]  # Display name for the website
-    recipients = site["emails"]  # List of email recipients
+        website_id = site["website_id"]  # Unique identifier for the website in Umami
+        website_name = site["name"]  # Display name for the website
+        recipients = site["emails"]  # List of email recipients
 
-    if not website_id or not website_name or not recipients:
-        print("Website ID, name, and email recipients must be provided, there is a problem with your websites_config.json.")
-        exit(1)
+        if not website_id or not website_name or not recipients:
+            print("Website ID, name, and email recipients must be provided, there is a problem with your websites_config.json.")
+            exit(1)
 
-    what_stats = site.get("what_stats", ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"])  # List of metrics to include in the report
-    top = site.get('top', 5) # show the number of statistics per chapter, default 5
+        what_stats = site.get("what_stats", ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"])  # List of metrics to include in the report
+        top = site.get('top', 5) # show the number of statistics per chapter, default 5
 
-    # get the correct laguage
-    translations = load_translation(lang)
-    # add frequency_options to the translation of the frequency (options)
-    translations['frequency_options'] = frequency_options(frequency, translations)
+        # get the correct laguage
+        translations = load_translation(lang)
+        # add frequency_options to the translation of the frequency (options)
+        translations['frequency_options'] = frequency_options(frequency, translations)
 
-    # Check if the report should be sent based on frequency and send_day
-    if should_send_report(frequency, send_day):
-        # Calculate the date range for the report based on frequency
-        range_start, range_end = calculate_date_range(now, frequency)
+        # Check if the report should be sent based on frequency and send_day
+        if should_send_report(frequency, send_day):
+            # Calculate the date range for the report based on frequency
+            range_start, range_end = calculate_date_range(now, frequency)
 
-        # Fetch analytics data from the Umami API
-        stats = get_umami_data(UMAMI_API_URL, BEARER_TOKEN, website_id, range_start, range_end, frequency, what_stats)
+            # Fetch analytics data from the Umami API
+            stats = get_umami_data(UMAMI_API_URL, BEARER_TOKEN, website_id, range_start, range_end, frequency, what_stats)
 
-        # Get the current directory of the script
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        css_file = "style.css"
-        # Combine the current directory with the CSS file name
-        css_file_path = os.path.join(current_dir, css_file)
+            # Get the current directory of the script
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            css_file = "style.css"
+            # Combine the current directory with the CSS file name
+            css_file_path = os.path.join(current_dir, css_file)
 
-        # Generate the HTML email report
-        report = generate_html_email(COMPANY, frequency, stats, what_stats, css_file_path, website_name, top, translations)
+            # Generate the HTML email report
+            report = generate_html_email(COMPANY, frequency, stats, what_stats, css_file_path, website_name, top, translations)
 
-        # Compose the subject line for the email
-        subject = f"{frequency.capitalize()}ly Website Report for {website_name}"
+            # Compose the subject line for the email
+            subject = f"{frequency.capitalize()}ly Website Report for {website_name}"
 
-        # Send the report via email
-        send_email(subject, report, recipients, SMTP_CONFIG)
+            # Send the report via email
+            send_email(subject, report, recipients, SMTP_CONFIG)
+    except KeyError as e:
+        print(f"Error getting frequency options: {e}")
+        return ""
+    except Exception as e:
+        logger.error(f"Error processing website: {e}")
 
 if __name__ == "__main__":
     """

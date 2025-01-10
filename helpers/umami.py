@@ -10,8 +10,10 @@ Functions:
 - determine_unit: Maps reporting frequency to the appropriate unit.
 - get_umami_data: Fetches and processes data for specified statistics.
 """
-
+import logging
 import requests
+
+logger = logging.getLogger(__name__)
 
 def validate_date_range(range_start, range_end):
     """

@@ -3,3 +3,5 @@ websites_config.json
 # pixi environments
 .pixi
 *.egg-info
+logs/*
+logs/
