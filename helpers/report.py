@@ -68,6 +68,40 @@ def get_styling(css_file_path="style.css"):
         .footer { text-align: center; font-size: 12px; color: #555; margin-top: 20px; }
         """
 
+def capitalize_sentences(text):
+    """
+    Capitalizes the first letter of each sentence in a given text.
+
+    Args:
+        text (str): The input string containing sentences.
+
+    Returns:
+        str: The modified string with each sentence capitalized.
+    """
+    try:
+        # Ensure the input is a string
+        if not isinstance(text, str):
+            raise TypeError("Input must be a string.")
+
+        # Split the text into sentences by '. ' (assumes sentences end with period + space)
+        sentences = text.split('. ')
+
+        # Capitalize each sentence and store them in a list
+        capitalized_sentences = [s.capitalize() for s in sentences if s]  # Ignore empty sentences
+
+        # Join the capitalized sentences back into a single string with '. ' separator
+        final_text = '. '.join(capitalized_sentences)
+
+        return final_text
+
+    except TypeError as e:
+        logger.error(f"Error: {e}")
+        return ""
+    except Exception as e:
+        # Handle any unexpected error
+        logger.error(f"An unexpected error occurred: {e}")
+        return ""
+
 def generate_html_email(company, frequency, mystats, what_stats, css_file_path="style.css", website_name: str = "", top:int=10, translations:dict = {}):
     try:
         """
@@ -99,7 +133,10 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
         report_header = translations["report_header"].format(website_name=website_name,
                                                              frequency_text=translations[frequency],
                                                              frequency_options_text=translations['frequency_options']).capitalize()
+        report_header = capitalize_sentences(report_header)
+
         report_footer = translations["report_footer"].format(comp_email=comp_email, comp_url=comp_url).capitalize()
+        report_footer = capitalize_sentences(report_footer)
 
         if stats:
             metrics_table = f"""
