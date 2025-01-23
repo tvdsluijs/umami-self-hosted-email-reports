@@ -11,3 +11,5 @@ report = "python umami_report.py"
 
 [dependencies]
 requests = "*"
+jinja2 = ">=3.1.5,<4"
+weasyprint = ">=62.3,<63"

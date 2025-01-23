@@ -13,7 +13,7 @@ Features:
 Modules Used:
 - `helpers.config`: Load configuration files.
 - `helpers.auth`: Authenticate with the Umami API.
-- `helpers.report`: Generate HTML email reports.
+- `helpers.general`: Has some general functions
 - `helpers.email`: Send emails via SMTP.
 - `helpers.umami`: Fetch analytics data from the Umami API.
 - `helpers.scheduler`: Schedule and process reports.
@@ -23,16 +23,23 @@ Author: Theo van der Sluijs
 Contact: [📧 Email](mailto:theo@vandersluijs.nl)
 License: MIT
 """
+from datetime import datetime
+from typing import Dict, List, Optional, Tuple, Any
 import os
 import re
 import logging
 from logging.handlers import TimedRotatingFileHandler
 from sys import exit
+import traceback
+
+from jinja2 import Environment, FileSystemLoader, TemplateError
+from weasyprint import HTML
+
 # Import helper functions and modules
 from helpers.config import load_config
 from helpers.auth import authenticate
 from helpers.frequency_options import frequency_options
-from helpers.report import generate_html_email
+from helpers.general import capitalize_sentences, check_create_dir, type_mapping
 from helpers.email import send_email
 from helpers.umami import get_umami_data
 from helpers.translation_validator import load_smart_translation
@@ -40,51 +47,81 @@ from helpers.scheduler import schedule_reports, should_send_report
 from helpers.date_ranges import calculate_date_range
 
 # Load configurations
-CONFIG = load_config("config.json")  # General configurations, e.g., SMTP and Umami credentials
-WEBSITES = load_config("websites_config.json")  # Website-specific configurations like frequency and emails
+CONFIG: Dict[str, Any] = load_config("configs/config.json")
+WEBSITES: List[Dict[str, Any]] = load_config("configs/websites_config.json")
 
-COMPANY = CONFIG["company"]  # Company details for branding in email
-UMAMI_API_URL = CONFIG["umami"]["api_url"]  # Base URL for Umami API
-UMAMI_USERNAME = CONFIG["umami"]["username"]  # Umami API username
-UMAMI_PASSWORD = CONFIG["umami"]["password"]  # Umami API password
-SMTP_CONFIG = CONFIG["smtp"]  # SMTP configuration for sending emails
+COMPANY: Dict[str, str] = CONFIG["company"]
+UMAMI_API_URL: str = CONFIG["umami"]["api_url"]
+UMAMI_USERNAME: str = CONFIG["umami"]["username"]
+UMAMI_PASSWORD: str = CONFIG["umami"]["password"]
+SMTP_CONFIG: Dict[str, Any] = CONFIG["smtp"]
 
-BEARER_TOKEN = None  # Global variable for storing the Umami API authentication token
+BEARER_TOKEN: Optional[str] = None
 
-# Configure logging
-if not os.path.exists('logs'):
-    os.makedirs('logs')
+def setup_logging() -> None:
+    """Configure logging with rotation and formatting."""
+    if not os.path.exists('logs'):
+        os.makedirs('logs')
 
-log_handler = TimedRotatingFileHandler(
-    'logs/umami_report.log',
-    when='midnight',
-    interval=1,
-    backupCount=7
-)
-log_handler.suffix = "%Y-%m-%d"
-log_handler.extMatch = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+    log_handler = TimedRotatingFileHandler(
+        'logs/umami_report.log',
+        when='midnight',
+        interval=1,
+        backupCount=7
+    )
+    log_handler.suffix = "%Y-%m-%d"
+    log_handler.extMatch = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
-logging.basicConfig(
-    level=logging.ERROR,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        log_handler,
-        logging.StreamHandler()
-    ]
-)
+    logging.basicConfig(
+        level=logging.ERROR,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s (%(filename)s:%(lineno)d)',
+        handlers=[log_handler, logging.StreamHandler()]
+    )
+
+    logging.getLogger('weasyprint').setLevel(logging.ERROR)
 
 logger = logging.getLogger(__name__)
 
+def validate_website_config(site: Dict[str, Any]) -> bool:
+    """Validate required website configuration parameters.
 
-def load_translation(lang_code):
+    Args:
+        site: Website configuration dictionary
+
+    Returns:
+        bool: True if configuration is valid
+    """
+    required_fields = ['website_id', 'name', 'emails']
+
+    for field in required_fields:
+        if not site.get(field):
+            logger.error(f"Missing required field: {field} in website configuration")
+            return False
+
+    return True
+
+def get_website_settings(site: Dict[str, Any]) -> Tuple[str, str, str, List[str], bool, bool, str]:
+    """Extract website settings from configuration."""
+    return (
+        site.get('lang', 'en'),
+        site.get('frequency', 'daily'),
+        site.get('email_template', 'email_template.html'),
+        site.get('what_stats', ['stats', 'events', 'urls', 'referrers', 'browsers',
+                               'oses', 'devices', 'countries']),
+        site.get('send_pdf', True),
+        site.get('generate_html', False),
+        site.get('send_login_url', '')
+    )
+
+def load_translation(lang_code: str) -> Dict[str, Any]:
     """
     Load a translation file with automatic fallback for missing translations.
 
     Args:
-        lang_code (str): Language code for the translation file
+        lang_code: Language code for the translation file
 
     Returns:
-        dict: Complete translation dictionary with all required keys
+        Complete translation dictionary
     """
     try:
         return load_smart_translation(lang_code)
@@ -93,70 +130,136 @@ def load_translation(lang_code):
         logger.warning("Falling back to English translations")
         return load_smart_translation('en')
 
-def process_website(site, now):
+def generate_report(website_name: str, context: Dict[str, Any],
+                   email_template: str, generate_pdf: bool,
+                   generate_html: bool) -> Tuple[str, Optional[str]]:
+    """Generate HTML and optionally PDF reports."""
+    env = Environment(loader=FileSystemLoader('templates'))
+    template = env.get_template(email_template)
+
+    report = template.render(context)
+    pdf_filename = None
+
+    if generate_pdf:
+        pdf_filename = f"pdf-files/{website_name.replace(' ', '_').lower()}_report.pdf"
+        HTML(string=report).write_pdf(pdf_filename)
+        logger.info(f"Report saved to {pdf_filename}")
+
+    if generate_html:
+        html_filename = f"html-files/{website_name.replace(' ', '_').lower()}_report.html"
+        with open(html_filename, 'w', encoding='utf-8') as f:
+            f.write(report)
+        logger.info(f"Report saved to {html_filename}")
+
+    return report, pdf_filename
+
+def process_website(site: Dict[str, Any], now: datetime) -> None:
+    """Process a single website to generate and send analytics reports."""
     try:
-        """
-        Process a single website to determine if a report should be sent,
-        fetch data, generate the report, and send it via email.
+        if not validate_website_config(site):
+            return
 
-        Args:
-            site (dict): The website configuration dictionary.
-            now (datetime): The current date and time.
-        """
-        # Extract website-specific configuration
-        lang = site.get('lang', 'en')  # Language code for translations
-        frequency = site.get('frequency', 'daily')  # Frequency of the report (default: daily)
-        send_day = site.get('send_day', [])  # Days to send the report (e.g., ["mon", "fri"])
+        # Extract settings
+        lang, frequency, email_template, what_stats, generate_pdf, generate_html, login_url = get_website_settings(site)
 
-        website_id = site["website_id"]  # Unique identifier for the website in Umami
-        website_name = site["name"]  # Display name for the website
-        recipients = site["emails"]  # List of email recipients
+        # Check scheduled time
+        timer = site.get('email_time', "08:00")
+        if int(timer.split(":")[0]) != now.hour:
+            return
 
-        if not website_id or not website_name or not recipients:
-            logger.error("Website ID, name, and email recipients must be provided, there is a problem with your websites_config.json.")
-            exit(1)
+        website_id = site["website_id"]
+        website_name = site["name"]
+        recipients = site["emails"]
+        send_day = site.get('send_day', [])
+        top = site.get('top', 5)
 
-        what_stats = site.get("what_stats", ["stats", "events", "urls", "referrers", "browsers", "oses", "devices", "countries"])  # List of metrics to include in the report
-        top = site.get('top', 5) # show the number of statistics per chapter, default 5
-
-        # get the correct laguage
+        # Load translations
         translations = load_translation(lang)
-        # add frequency_options to the translation of the frequency (options)
         translations['frequency_options'] = frequency_options(frequency, translations)
 
-        # Check if the report should be sent based on frequency and send_day
-        if should_send_report(frequency, send_day):
-            # Calculate the date range for the report based on frequency
-            range_start, range_end = calculate_date_range(now, frequency)
+        # Check if report should be sent
+        if not should_send_report(frequency, send_day):
+            return
 
-            # Fetch analytics data from the Umami API
-            stats = get_umami_data(UMAMI_API_URL, BEARER_TOKEN, website_id, range_start, range_end, frequency, what_stats)
+        # Get date range and fetch data
+        range_start, range_end = calculate_date_range(now, frequency)
+        web_stats = get_umami_data(UMAMI_API_URL, BEARER_TOKEN, website_id,
+                                 range_start, range_end, frequency, what_stats)
 
-            # Get the current directory of the script
-            current_dir = os.path.dirname(os.path.abspath(__file__))
-            css_file = "style.css"
-            # Combine the current directory with the CSS file name
-            css_file_path = os.path.join(current_dir, css_file)
+        # Prepare email content
+        subject = translations['website_analytics_report_for'].format(
+            frequency_options=translations['frequency_options'],
+            website_name=website_name
+        )
 
-            # Generate the HTML email report
-            if(report := generate_html_email(COMPANY, frequency, stats, what_stats, css_file_path, website_name, top, translations)):
-                subject = f"{translations['frequency_options']} Website analytics report for {website_name}"
-                # Send the report via email
-                send_email(subject, report, recipients, SMTP_CONFIG)
+        login_url_text = translations['link_to_login'].format(login_url=login_url) if login_url else ""
 
-    except KeyError as e:
-        logger.error(f"Error key not found in process_website: {e}")
+        report_header = capitalize_sentences(
+            translations["report_header"].format(
+                website_name=website_name,
+                frequency_text=translations[frequency],
+                frequency_options_text=translations['frequency_options']
+            )
+        )
+
+        comp_url = COMPANY.get('url', '#')
+        comp_email = COMPANY.get('email', 'support@example.com')
+        report_footer = capitalize_sentences(
+            translations["report_footer"].format(
+                comp_email=comp_email,
+                comp_url=comp_url
+            )
+        )
+
+        # Prepare template context
+        context = {
+            'lang': lang,
+            'report_header': report_header,
+            'report_footer': report_footer,
+            'company': COMPANY,
+            'frequency': frequency,
+            'stats': web_stats.get("stats", {}),
+            'mystats': web_stats,
+            'what_stats': what_stats,
+            'stat_type_mapping': type_mapping(),
+            'website_name': website_name,
+            'top': top,
+            'translations': translations,
+            'login_url_text': login_url_text
+        }
+
+        # Generate report
+        report, pdf_filename = generate_report(
+            website_name, context, email_template,
+            generate_pdf, generate_html
+        )
+
+        # Send email (currently disabled)
+        if report:
+            send_email(subject, report, recipients, SMTP_CONFIG, pdf_filename)
+
     except Exception as e:
-        logger.error(f"Error processing process_website: {e}")
+        logger.error(f"Error processing website {site.get('name', 'unknown')}: {str(e)}")
+        logger.debug(traceback.format_exc())
 
-if __name__ == "__main__":
-    """
-    Main script execution:
-    - Authenticate with the Umami API.
-    - Schedule reports for all websites in the configuration.
-    """
-    # Authenticate with the Umami API and retrieve a bearer token
+def main() -> None:
+    """Main execution function."""
+    setup_logging()
+
+    # Create necessary directories
+    for folder in ['pdf-files', 'html-files']:
+        check_create_dir(folder)
+
+    # Authenticate with Umami API
+    global BEARER_TOKEN
     BEARER_TOKEN = authenticate(UMAMI_API_URL, UMAMI_USERNAME, UMAMI_PASSWORD)
 
-    # Schedule and process reports for all websites
+    if not BEARER_TOKEN:
+        logger.error("Failed to authenticate with Umami API")
+        exit(1)
+
+    # Schedule and process reports
     schedule_reports(WEBSITES, process_website)
+
+if __name__ == "__main__":
+    main()

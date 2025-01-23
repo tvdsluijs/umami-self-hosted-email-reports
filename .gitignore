@@ -1,7 +1,45 @@
-config.json
-websites_config.json
+# Configuration files
+configs/config.json
+configs/websites_config.json
+
+# Pixi environments
+.pixi
+pixi.lock
+
+# Egg info directories
+*.egg-info
+
+# Log files
+logs/*
+logs/
+
+# PDF files
+pdf-files/
+pdf-files/*
+
+# HTML files
+html-files/
+html-files/*
+
+# Python cache directories
+helpers/__pycache__/
+helpers/.pytest_cache/
+.pytest_cache/
+
+
+
+configs/config.json
+configs/websites_config.json
 # pixi environments
 .pixi
 *.egg-info
 logs/*
 logs/
+pdf-files/
+pdf-files/*
+html-files/
+html-files/*
+pixi.lock
+helpers/__pycache__/
+helpers/.pytest_cache/
+.pytest_cache/

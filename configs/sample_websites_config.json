@@ -1,0 +1,59 @@
+/**
+Remove these comment lines and save this file in the same folder as the script,
+rename to websites_config.json and fill in the details for the websites you want to monitor.
+
+frequency: day, week, month, year
+send_day: empty = every day or can be multiple mon, tue, wed, thu, fri, sat, sun
+top: numer of top pages to show [3, 5 ,10], referrers, browsers, oses, devices, countries
+what_stats: stats, event, url, referrer, browser, os, device, country
+email_template: you can have a different template for each website, its in folder templates
+email_time: time of day to send the email, format HH:00 (only hourly), "08:00" to send at 8am
+You should now run this script every hour, use Millatery time format for the email_time
+
+send_pdf: true or false, sending the same information with a PDF
+send_login_url: url to login, when empty the login url is not send
+**/
+[
+    {
+        "website_id": "website-id-1",
+        "name": "website 1 name",
+        "frequency": "week",
+        "lang": "en",
+        "send_day": [],
+        "top": 5,
+        "emails": ["recipient1@example.com", "recipient2@example.com"],
+        "what_stats": ["stats", "event", "url", "referrer", "browser", "os", "device", "country"],
+        "email_template": "email_template.html",
+        "email_time": "08:00",
+        "send_login_url": "https://url.to.your.umami.com",
+        "send_pdf": true
+    },
+    {
+        "website_id": "website-id-2",
+        "name": "Website 2 name",
+        "frequency": "month",
+        "lang": "en",
+        "send_day": [],
+        "top": 10,
+        "emails": ["recipient3@example.com"],
+        "what_stats": ["stats", "events", "urls", "referrers", "browsers", "os", "device", "country"],
+        "email_template": "email_template.html",
+        "email_time": "09:00",
+        "send_login_url": "https://url.to.your.umami.com",
+        "send_pdf": true
+    },
+    {
+        "website_id": "website-id-3",
+        "name": "website 3 name",
+        "frequency": "day",
+        "lang": "nl",
+        "send_day": ["mon", "thu"],
+        "top": 8,
+        "emails": ["recipient1@example.com", "recipient2@example.com"],
+        "what_stats": ["stats", "event", "url"],
+        "email_template": "email_template.html",
+        "email_time": "07:00",
+        "send_login_url": "",
+        "send_pdf": true
+    }
+]

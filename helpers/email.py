@@ -10,10 +10,12 @@ Functions:
 import logging
 import smtplib
 from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 
 logger = logging.getLogger(__name__)
 
-def send_email(subject, email_content, recipient_emails, smtp_config):
+def send_email(subject, email_content, recipient_emails, smtp_config, pdf_filename):
     """
     Sends an email using the provided SMTP configuration.
 
@@ -21,6 +23,7 @@ def send_email(subject, email_content, recipient_emails, smtp_config):
         subject (str): Subject of the email.
         email_content (MIMEText): The email body as a MIMEText object.
         recipient_emails (list): List of recipient email addresses.
+        pdf-filename (str): The filename of the PDF to attach to the email.
         smtp_config (dict): SMTP configuration details, including:
             - host (str): SMTP server host.
             - port (int): SMTP server port.
@@ -31,6 +34,7 @@ def send_email(subject, email_content, recipient_emails, smtp_config):
     Raises:
         Exception: If sending the email fails.
     """
+
     try:
         # Create the email container (MIMEMultipart object)
         msg = MIMEMultipart()
@@ -39,7 +43,17 @@ def send_email(subject, email_content, recipient_emails, smtp_config):
         msg['Subject'] = subject  # Set the email subject
 
         # Attach the email content (body)
-        msg.attach(email_content)
+        msg.attach(MIMEText(email_content, 'html'))
+
+        # Attach the PDF file if provided
+        if pdf_filename:
+            try:
+                with open(pdf_filename, 'rb') as pdf_file:
+                    pdf_attachment = MIMEApplication(pdf_file.read(), _subtype="pdf")
+                    pdf_attachment.add_header('Content-Disposition', 'attachment', filename=pdf_filename)
+                    msg.attach(pdf_attachment)
+            except Exception as e:
+                logger.error(f"Failed to attach PDF: {e}")
 
         # Connect to the SMTP server and send the email
         with smtplib.SMTP(smtp_config['host'], smtp_config['port']) as server:

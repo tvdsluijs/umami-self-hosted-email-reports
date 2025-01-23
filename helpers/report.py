@@ -130,6 +130,7 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
         # Generate metrics summary table
         stats = mystats.get("stats", {})
         # Construct the report header and footer
+
         report_header = translations["report_header"].format(website_name=website_name,
                                                              frequency_text=translations[frequency],
                                                              frequency_options_text=translations['frequency_options']).capitalize()
@@ -171,7 +172,7 @@ def generate_html_email(company, frequency, mystats, what_stats, css_file_path="
             "urls": {"col1": "Pages", "col2": "Views"},
             "referrers": {"col1": "Referrers", "col2": "Views"},
             "browsers": {"col1": "Browsers", "col2": "Views"},
-            "oses": {"col1": "Operating Systems", "col2": "Views"},
+            "oses": {"col1": "oses", "col2": "Views"},
             "devices": {"col1": "Devices", "col2": "Views"},
             "countries": {"col1": "Countries", "col2": "Views"},
             "events": {"col1": "Events", "col2": "Views"}

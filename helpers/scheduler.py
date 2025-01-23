@@ -58,6 +58,7 @@ def schedule_reports(websites, process_website):
         - Ensures errors during processing are caught and logged.
     """
     now = datetime.now()  # Capture the current datetime for consistent usage
+
     with ThreadPoolExecutor(max_workers=5) as executor:
         # Submit report generation tasks for each website
         futures = [executor.submit(process_website, site, now) for site in websites]

@@ -74,7 +74,7 @@ def determine_unit(frequency):
         raise ValueError(f"Unsupported frequency: {frequency}")
     return unit_mapping[frequency]
 
-def get_umami_data(api_url, token, website_id, range_start, range_end, frequency="week", what_stats=None):
+def get_umami_data(api_url, token, website_id, range_start, range_end, frequency="week", what_stats=[]):
     """
     Fetch and process data from Umami API for the requested statistics.
 
@@ -108,35 +108,27 @@ def get_umami_data(api_url, token, website_id, range_start, range_end, frequency
     stats_url = f"{api_url}/websites/{website_id}/stats"
     metrics_url = f"{api_url}/websites/{website_id}/metrics"
 
-    # Map stat types to their corresponding API endpoints and parameters
-    stat_type_mapping = {
-        "stats": {"url": stats_url, "type": None},
-        "events": {"url": metrics_url, "type": "event"},
-        "urls": {"url": metrics_url, "type": "url"},
-        "referrers": {"url": metrics_url, "type": "referrer"},
-        "browsers": {"url": metrics_url, "type": "browser"},
-        "oses": {"url": metrics_url, "type": "os"},
-        "devices": {"url": metrics_url, "type": "device"},
-        "countries": {"url": metrics_url, "type": "country"}
-    }
-
+    # https://umami.is/docs/api/website-stats-api#get-/api/websites/:websiteid/metrics
+    types = ["stats", "url", "referrer", "browser", "os", "device", "country", "event"]
     mystats = {}
     try:
-        for stat in what_stats or []:
-            if stat not in stat_type_mapping:
-                logger.error(f"Warning: Unsupported stat type '{stat}'. Skipping.")
+        for type in types:
+            if type not in what_stats:
+                logger.error(f"Warning: Unsupported stat type '{type}'. Skipping.")
                 continue
 
-            stat_config = stat_type_mapping[stat]
             params_with_type = {**params}
-            if stat_config["type"]:
-                params_with_type["type"] = stat_config["type"]
+            params_with_type["type"] = None
+            url = stats_url
+            if type != "stats":
+                params_with_type["type"] = type
+                url = metrics_url
 
             # Fetch data from the API
-            raw_data = fetch_stats(stat_config["url"], headers, params_with_type)
+            raw_data = fetch_stats(url, headers, params_with_type)
 
             # Process stats differently for general statistics
-            if stat == "stats":
+            if type == "stats":
                 mystats["stats"] = {
                     "pageviews": raw_data["pageviews"],
                     "visitors": raw_data["visitors"],
@@ -146,7 +138,7 @@ def get_umami_data(api_url, token, website_id, range_start, range_end, frequency
                 }
             else:
                 # Process other stats as label-value pairs
-                mystats[stat] = [{"label": item["x"], "value": item["y"]} for item in raw_data]
+                mystats[type] = [{"label": item["x"], "value": item["y"]} for item in raw_data]
 
         return mystats
     except requests.exceptions.RequestException as e:
