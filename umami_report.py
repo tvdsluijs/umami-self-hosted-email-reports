@@ -32,7 +32,7 @@ from logging.handlers import TimedRotatingFileHandler
 from sys import exit
 import traceback
 
-from jinja2 import Environment, FileSystemLoader, TemplateError
+from jinja2 import Environment, FileSystemLoader
 from weasyprint import HTML
 
 # Import helper functions and modules

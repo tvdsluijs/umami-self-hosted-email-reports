@@ -38,6 +38,6 @@
     "statistics": "Statistics",
     "link_to_login": "Click here to <a href='{login_url}'>login</a> to your account.",
     "website_analytics_report_for": "{frequency_options} website analytics report for {website_name}",
-    "report_header": "Welcome to your {frequency_options_text} website summary for {website_name}!<br/> Here are your top metrics from the last {frequency_text}.",
+    "report_header": "Welcome to your {frequency_options_text} website summary for {website_name}.<br/> Here are your top metrics from the last {frequency_text}.",
     "report_footer": "If you were not expecting this report, please contact support at <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }
