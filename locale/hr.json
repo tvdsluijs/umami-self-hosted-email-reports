@@ -38,6 +38,6 @@
     "statistics": "Statistika",
     "link_to_login": "Kliknite ovdje da biste se <a href='{login_url}'>prijavili</a> na svoj račun.",
     "website_analytics_report_for": "{frequency_options} izvještaj o analitici web stranice za {website_name}",
-    "report_header": "Dobrodošli u vaš {frequency_options_text} sažetak web stranice za {website_name}!<br/> Evo vaših glavnih metrika iz posljednjeg {frequency_text}.",
+    "report_header": "Dobrodošli u vaš {frequency_options_text} sažetak web stranice za <span class='strong'>{website_name}</span>.<br/> Evo vaših glavnih metrika iz posljednjeg {frequency_text}.",
     "report_footer": "Ako niste očekivali ovaj izvještaj, kontaktirajte podršku na <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

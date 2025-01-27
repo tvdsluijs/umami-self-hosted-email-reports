@@ -38,6 +38,6 @@
     "statistics": "Statistici",
     "link_to_login": "Faceți clic aici pentru a <a href='{login_url}'>conectați-vă</a> la contul dvs.",
     "website_analytics_report_for": "{frequency_options} raport de analiză a site-ului pentru {website_name}",
-    "report_header": "Bine ați venit la rezumatul {frequency_options_text} al site-ului {website_name}!<br/> Iată cele mai importante metrici din ultima {frequency_text}.",
+    "report_header": "Bine ați venit la rezumatul {frequency_options_text} al site-ului <span class='strong'>{website_name}</span>.<br/> Iată cele mai importante metrici din ultima {frequency_text}.",
     "report_footer": "Dacă nu ați așteptat acest raport, vă rugăm să contactați suportul la <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

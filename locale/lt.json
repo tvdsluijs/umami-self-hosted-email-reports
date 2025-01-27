@@ -38,6 +38,6 @@
     "statistics": "Statistika",
     "link_to_login": "Spustelėkite čia, kad <a href='{login_url}'>prisijungtumėte</a> prie savo paskyros.",
     "website_analytics_report_for": "{frequency_options} svetainės analizės ataskaita {website_name}",
-    "report_header": "Sveiki atvykę į jūsų {frequency_options_text} svetainės santrauką {website_name}!<br/> Čia yra jūsų pagrindiniai rodikliai iš paskutinio {frequency_text}.",
+    "report_header": "Sveiki atvykę į jūsų {frequency_options_text} svetainės santrauką <span class='strong'>{website_name}</span>.<br/> Čia yra jūsų pagrindiniai rodikliai iš paskutinio {frequency_text}.",
     "report_footer": "Jei nesitikėjote šios ataskaitos, susisiekite su palaikymo tarnyba el. paštu <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

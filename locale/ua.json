@@ -38,6 +38,6 @@
     "statistics": "Статистика",
     "link_to_login": "Натисніть тут, щоб <a href='{login_url}'>увійти</a> в свій обліковий запис.",
     "website_analytics_report_for": "{frequency_options} звіт аналітики вебсайту для {website_name}",
-    "report_header": "Ласкаво просимо до вашого {frequency_options_text} підсумку вебсайту для {website_name}!<br/> Ось ваші основні показники за останній {frequency_text}.",
+    "report_header": "Ласкаво просимо до вашого {frequency_options_text} підсумку вебсайту для <span class='strong'>{website_name}</span>.<br/> Ось ваші основні показники за останній {frequency_text}.",
     "report_footer": "Якщо ви не очікували цього звіту, будь ласка, зв'яжіться з підтримкою за адресою <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

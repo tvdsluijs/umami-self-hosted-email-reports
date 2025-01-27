@@ -38,6 +38,6 @@
     "statistics": "Tilastot",
     "link_to_login": "Napsauta tästä <a href='{login_url}'>kirjautuaksesi</a> tilillesi.",
     "website_analytics_report_for": "{frequency_options} verkkosivuston analyysiraportti {website_name}",
-    "report_header": "Tervetuloa {frequency_options_text} verkkosivustosi yhteenvetoon {website_name}!<br/> Tässä ovat viimeisen {frequency_text} parhaat mittarisi.",
+    "report_header": "Tervetuloa {frequency_options_text} verkkosivustosi yhteenvetoon <span class='strong'>{website_name}</span>.<br/> Tässä ovat viimeisen {frequency_text} parhaat mittarisi.",
     "report_footer": "Jos et odottanut tätä raporttia, ota yhteyttä tukeen osoitteessa <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

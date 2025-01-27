@@ -38,6 +38,6 @@
     "statistics": "Tölfræði",
     "link_to_login": "Smelltu hér til að <a href='{login_url}'>skrá þig inn</a> á reikninginn þinn.",
     "website_analytics_report_for": "{frequency_options} vefsíðu greiningarskýrsla fyrir {website_name}",
-    "report_header": "Velkomin í {frequency_options_text} vefsíðu yfirlit fyrir {website_name}!<br/> Hér eru helstu mælingar þínar frá síðustu {frequency_text}.",
+    "report_header": "Velkomin í {frequency_options_text} vefsíðu yfirlit fyrir <span class='strong'>{website_name}</span>.<br/> Hér eru helstu mælingar þínar frá síðustu {frequency_text}.",
     "report_footer": "Ef þú bjóst ekki við þessari skýrslu, vinsamlegast hafðu samband við stuðning á <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

@@ -38,6 +38,6 @@
     "statistics": "Statistika",
     "link_to_login": "Klõpsake siin, et <a href='{login_url}'>sisse logida</a> oma kontole.",
     "website_analytics_report_for": "{frequency_options} veebianalüütika aruanne {website_name} jaoks",
-    "report_header": "Tere tulemast teie {frequency_options_text} veebisaidi kokkuvõttesse {website_name}!<br/> Siin on teie peamised mõõdikud viimase {frequency_text} kohta.",
+    "report_header": "Tere tulemast teie {frequency_options_text} veebisaidi kokkuvõttesse <span class='strong'>{website_name}</span>.<br/> Siin on teie peamised mõõdikud viimase {frequency_text} kohta.",
     "report_footer": "Kui te ei oodanud seda aruannet, võtke ühendust toega aadressil <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

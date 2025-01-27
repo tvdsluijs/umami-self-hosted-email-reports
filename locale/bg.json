@@ -38,6 +38,6 @@
     "statistics": "Статистика",
     "link_to_login": "Натиснете тук, за да <a href='{login_url}'>влезете</a> в профила си.",
     "website_analytics_report_for": "{frequency_options} доклад за анализ на уебсайта за {website_name}",
-    "report_header": "Добре дошли в {frequency_options_text} обобщение на уебсайта {website_name}!<br/> Ето вашите най-важни метрики от последната {frequency_text}.",
+    "report_header": "Добре дошли в {frequency_options_text} обобщение на уебсайта <span class='strong'>{website_name}</span>.<br/> Ето вашите най-важни метрики от последната {frequency_text}.",
     "report_footer": "Ако не сте очаквали този доклад, моля, свържете се с поддръжката на <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

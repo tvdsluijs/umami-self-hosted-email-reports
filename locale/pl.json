@@ -38,6 +38,6 @@
     "statistics": "Statystyki",
     "link_to_login": "Kliknij tutaj, aby <a href='{login_url}'>zalogować się</a> na swoje konto.",
     "website_analytics_report_for": "{frequency_options} raport analityki strony internetowej dla {website_name}",
-    "report_header": "Witamy w twoim {frequency_options_text} podsumowaniu strony internetowej dla {website_name}!<br/> Oto twoje najlepsze metryki z ostatniego {frequency_text}.",
+    "report_header": "Witamy w twoim {frequency_options_text} podsumowaniu strony internetowej dla <span class='strong'>{website_name}</span>.<br/> Oto twoje najlepsze metryki z ostatniego {frequency_text}.",
     "report_footer": "Jeśli nie spodziewałeś się tego raportu, skontaktuj się z pomocą techniczną pod adresem <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

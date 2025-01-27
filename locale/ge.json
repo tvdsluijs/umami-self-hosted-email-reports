@@ -38,6 +38,6 @@
     "statistics": "სტატისტიკა",
     "link_to_login": "დასვენება <a href='{login_url}'>შესვლას</a> თქვენი ანგარიშზე.",
     "website_analytics_report_for": "{frequency_options} ვებგვერდის ანალიტიკური ანგარიში {website_name}",
-    "report_header": "კეთილი იყოს თქვენი {frequency_options_text} ვებგვერდის შეჯამება {website_name}!<br/> აქ არის თქვენი მთავარი მეტრიკები ბოლო {frequency_text}.",
+    "report_header": "კეთილი იყოს თქვენი {frequency_options_text} ვებგვერდის შეჯამება <span class='strong'>{website_name}</span>.<br/> აქ არის თქვენი მთავარი მეტრიკები ბოლო {frequency_text}.",
     "report_footer": "თუ თქვენ არ ელოდით ამ ანგარიშს, გთხოვთ, დაუკავშირდეთ მხარდაჭერას მისამართზე <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

@@ -38,6 +38,6 @@
     "statistics": "Štatistiky",
     "link_to_login": "Kliknite tu pre <a href='{login_url}'>prihlásenie</a> do vášho účtu.",
     "website_analytics_report_for": "{frequency_options} zhrnutie webovej stránky pre {website_name}",
-    "report_header": "Vitajte vo vašom {frequency_options_text} zhrnutí webovej stránky pre {website_name}!<br/> Tu sú vaše najlepšie metriky z posledného {frequency_text}.",
+    "report_header": "Vitajte vo vašom {frequency_options_text} zhrnutí webovej stránky pre <span class='strong'>{website_name}</span>.<br/> Tu sú vaše najlepšie metriky z posledného {frequency_text}.",
     "report_footer": "Ak ste túto správu neočakávali, kontaktujte prosím podporu na <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

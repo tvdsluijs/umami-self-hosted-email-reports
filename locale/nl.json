@@ -38,6 +38,6 @@
     "statistics": "Statistieken",
     "link_to_login": "Klik hier om <a href='{login_url}'>in te loggen</a> in uw account.",
     "website_analytics_report_for": "{frequency_options} website statistieken rapport voor {website_name}",
-    "report_header": "Welkom bij uw {frequency_options_text} website samenvatting voor {website_name}!<br/> Hier zijn uw belangrijkste statistieken van de afgelopen {frequency_text}.",
+    "report_header": "Welkom bij uw {frequency_options_text} website samenvatting voor <span class='strong'>{website_name}</span>.<br/> Hier zijn uw belangrijkste statistieken van de afgelopen {frequency_text}.",
     "report_footer": "Als u dit rapport niet verwachtte, neem dan contact op met de ondersteuning op <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

@@ -38,6 +38,6 @@
     "statistics": "Statistiques",
     "link_to_login": "Cliquez ici pour <a href='{login_url}'>vous connecter</a> à votre compte.",
     "website_analytics_report_for": "{frequency_options} rapport d'analyse de site Web pour {website_name}",
-    "report_header": "Bienvenue dans votre résumé de site Web {frequency_options_text} pour {website_name}!<br/> Voici vos principales métriques des derniers {frequency_text}.",
+    "report_header": "Bienvenue dans votre résumé de site Web {frequency_options_text} pour <span class='strong'>{website_name}</span>.<br/> Voici vos principales métriques des derniers {frequency_text}.",
     "report_footer": "Si vous ne vous attendiez pas à ce rapport, veuillez contacter le support à <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

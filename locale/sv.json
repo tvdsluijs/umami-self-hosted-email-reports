@@ -38,6 +38,6 @@
     "statistics": "Statistik",
     "link_to_login": "Klicka här för att <a href='{login_url}'>logga in</a> på ditt konto.",
     "website_analytics_report_for": "{frequency_options} webbplatsanalysrapport för {website_name}",
-    "report_header": "Välkommen till din {frequency_options_text} webbplatsöversikt för {website_name}!<br/> Här är dina toppstatistik från de senaste {frequency_text}.",
+    "report_header": "Välkommen till din {frequency_options_text} webbplatsöversikt för <span class='strong'>{website_name}</span>.<br/> Här är dina toppstatistik från de senaste {frequency_text}.",
     "report_footer": "Om du inte förväntade dig denna rapport, vänligen kontakta supporten på <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }

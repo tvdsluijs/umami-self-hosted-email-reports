@@ -38,6 +38,6 @@
     "statistics": "Statisztika",
     "link_to_login": "Kattintson ide a <a href='{login_url}'>bejelentkezéshez</a> a fiókjába.",
     "website_analytics_report_for": "{frequency_options} weboldal elemzési jelentés a(z) {website_name} számára",
-    "report_header": "Üdvözöljük a(z) {website_name} {frequency_options_text} weboldal összefoglalójában!<br/> Itt vannak az elmúlt {frequency_text} legfontosabb mutatói.",
+    "report_header": "Üdvözöljük a(z) {website_name} {frequency_options_text} weboldal összefoglalójában <span class='strong'>{website_name}</span>.<br/> Itt vannak az elmúlt {frequency_text} legfontosabb mutatói.",
     "report_footer": "Ha nem számított erre a jelentésre, kérjük, lépjen kapcsolatba a támogatással a következő címen: <a href=\"mailto:{comp_email}\">{comp_email}</a>.<br/>"
 }
