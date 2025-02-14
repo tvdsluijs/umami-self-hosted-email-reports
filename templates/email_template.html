@@ -98,7 +98,17 @@
                     <td>{{stats.get('visits', {}).get('value', 0)}}</td>
                     <td>{{stats.get('visitors', {}).get('value', 0)}}</td>
                     <td>{{stats.get('bounces', {}).get('value', 0)}}%</td>
-                    <td>{{stats.get('totaltime', {}).get('value', 0)}}s</td>
+
+                    <td>
+                        {% set total_time = stats.get('totaltime', {}).get('value', 0) %}
+                        {% if total_time > 60 %}
+                            {% set minutes = total_time // 60 %}
+                            {% set seconds = total_time % 60 %}
+                            {{ minutes }}m {{ seconds }}s
+                        {% else %}
+                            {{ total_time }}s
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <td>
@@ -108,7 +118,17 @@
                     <td>{{stats.get('visits', {}).get('prev', 0)}}</td>
                     <td>{{stats.get('visitors', {}).get('prev', 0)}}</td>
                     <td>{{stats.get('bounces', {}).get('prev', 0)}}%</td>
-                    <td>{{stats.get('totaltime', {}).get('prev', 0)}}s</td>
+                    <td>
+                        {% set total_time = stats.get('totaltime', {}).get('prev', 0) %}
+                        {% if total_time > 60 %}
+                            {% set minutes = total_time // 60 %}
+                            {% set seconds = total_time % 60 %}
+                            {{ minutes }}m {{ seconds }}s
+                        {% else %}
+                            {{ total_time }}s
+                        {% endif %}
+                    </td>
+
                 </tr>
             </table>
 
